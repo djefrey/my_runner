@@ -16,7 +16,7 @@ static void update(infos_t *infos, unsigned int elapsed, unsigned int *pos)
     list_t *list = infos->objects;
     object_t *obj = NULL;
 
-    *pos += 10;
+    *pos += (elapsed / FPS) * 10;
     move_backgrounds(infos, *pos);
     while (list) {
         obj = (object_t*) list->data;

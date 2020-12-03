@@ -15,6 +15,8 @@
 #define WINDOW_HEIGHT 1080
 #define WINDOW_TITLE "my_runner"
 
+#define FPS (float) (1 / 60.0 * 1000000)
+
 #define PLAYER_POS 100
 
 enum texture {PLAYER_TEXT,
