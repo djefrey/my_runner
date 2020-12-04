@@ -5,8 +5,8 @@
 ** create a list
 */
 
- #include <stdlib.h>
- #include "my_list.h"
+#include <stdlib.h>
+#include "my_list.h"
 
 void create_list(list_t **list, void *data)
 {

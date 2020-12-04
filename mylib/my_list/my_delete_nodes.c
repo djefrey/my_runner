@@ -20,7 +20,7 @@ int my_delete_node(list_t **begin, void *data)
             if (prev != NULL)
                 prev->next = next;
             else
-               *begin = next;
+                *begin = next;
             return (0);
         } else
             prev = actual;
@@ -41,7 +41,7 @@ int my_delete_nodes(list_t **begin, void const *data_ref, int (*cmp)())
             if (prev != NULL)
                 prev->next = next;
             else
-               *begin = next;
+                *begin = next;
         } else
             prev = actual;
         actual = next;
