@@ -15,7 +15,15 @@
 #define WINDOW_HEIGHT 1080
 #define WINDOW_TITLE "my_runner"
 
+#define ABS(value) (value < 0 ? value * -1 : value)
+
 #define FPS (float) (1 / 60.0 * 1000000)
+
+#define SCROLLING_SPEED 10
+
+#define GROUND_HEIGHT 180
+
+#define BLOCK_SIZE 64
 
 #define PLAYER_POS 100
 
@@ -33,8 +41,10 @@ typedef struct object {
     enum object_type type;
     enum texture texture;
     sfSprite *sprite;
-    sfVector2u pos;
-    void (*update)(struct object*, unsigned int, unsigned int);
+    sfVector2f pos;
+    sfVector2f acceleration;
+    float rot;
+    void (*update)(struct object*, list_t*, unsigned int);
 } object_t;
 
 typedef struct {
@@ -44,7 +54,7 @@ typedef struct {
     object_t *player;
 } infos_t;
 
-typedef void (*update_fct_t)(object_t*, unsigned int, unsigned int);
+typedef void (*update_fct_t)(object_t*, list_t*, unsigned int);
 
 infos_t *create_infos(void);
 
@@ -56,6 +66,8 @@ void move_backgrounds(infos_t *infos, unsigned int pos);
 void destroy_backgrounds(list_t *backgrounds);
 list_t *create_backgrounds(infos_t *infos);
 
+void set_position(object_t *object, unsigned int x, unsigned int y);
+void set_rotation(object_t *object, float rot);
 void destroy_object(object_t *object);
 void destroy_objects(list_t *list);
 object_t *create_object(infos_t *infos, enum object_type type,

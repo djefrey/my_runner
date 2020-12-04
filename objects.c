@@ -10,6 +10,19 @@
 #include "my_list.h"
 #include "my_runner.h"
 
+void set_position(object_t *object, unsigned int x, unsigned int y)
+{
+    (object->pos).x = x;
+    (object->pos).y = y;
+    sfSprite_setPosition(object->sprite, object->pos);
+}
+
+void set_rotation(object_t *object, float rot)
+{
+    object->rot = rot;
+    sfSprite_setRotation(object->sprite, rot);
+}
+
 void destroy_object(object_t *object)
 {
     sfSprite_destroy(object->sprite);
@@ -34,7 +47,8 @@ enum texture text_id, update_fct_t up_fct)
 {
     object_t *obj = malloc(sizeof(object_t));
     sfSprite *sprite = sfSprite_create();
-    sfVector2u pos = {0, 0};
+    sfVector2f pos = {0, 0};
+    sfVector2f acc = {0, 0};
 
     if (obj == NULL) {
         sfSprite_destroy(sprite);
@@ -45,6 +59,9 @@ enum texture text_id, update_fct_t up_fct)
     obj->texture = text_id;
     obj->sprite = sprite;
     obj->pos = pos;
+    obj->acceleration = acc;
+    obj->rot = 0;
     obj->update = up_fct;
+    create_list(&(infos->objects), obj);
     return (obj);
 }

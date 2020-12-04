@@ -17,7 +17,10 @@ static void manage_mouse(sfMouseButtonEvent mouseEv, infos_t *infos)
 
 static void manage_keyboard(sfKeyEvent keyEv, infos_t *infos)
 {
-
+    if (keyEv.type == sfEvtKeyPressed) {
+        if (keyEv.code == sfKeySpace && ABS(infos->player->acceleration.y) < 0.01)
+            infos->player->acceleration.y -= 20;
+    }
 }
 
 void analyse_events(sfRenderWindow *window, infos_t *infos)

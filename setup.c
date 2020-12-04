@@ -31,14 +31,9 @@ infos_t *create_infos(void)
     infos->backgrounds = create_backgrounds(infos);
     if (!(infos->backgrounds))
         return (destroy_infos(infos));
+    infos->objects = NULL;
     infos->player = create_player(infos);
     if (!(infos->player))
         return (destroy_infos(infos));
-    infos->objects = NULL;
-    create_list(&(infos->objects), infos->player);
-    if (!(infos->objects)) {
-        destroy_object(infos->player);
-        return (destroy_infos(infos));
-    }
     return (infos);
 }
