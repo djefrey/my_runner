@@ -10,7 +10,7 @@
 #include "my_list.h"
 #include "my_runner.h"
 
-void set_position(object_t *object, unsigned int x, unsigned int y)
+void set_position(object_t *object, int x, int y)
 {
     (object->pos).x = x;
     (object->pos).y = y;
@@ -23,8 +23,10 @@ void set_rotation(object_t *object, float rot)
     sfSprite_setRotation(object->sprite, rot);
 }
 
-void destroy_object(object_t *object)
+void destroy_object(object_t *object, list_t *list)
 {
+    if (list)
+        my_delete_node(list, object);
     sfSprite_destroy(object->sprite);
     free(object);
 }
@@ -36,7 +38,7 @@ void destroy_objects(list_t *list)
     while (list) {
         tmp = list->next;
         if (list->data)
-            destroy_object((object_t*) list->data);
+            destroy_object((object_t*) list->data, NULL);
         free(list);
         list = tmp;
     }
@@ -59,7 +61,7 @@ enum texture text_id, update_fct_t up_fct)
     obj->texture = text_id;
     obj->sprite = sprite;
     obj->pos = pos;
-    obj->acceleration = acc;
+    obj->acc = acc;
     obj->rot = 0;
     obj->update = up_fct;
     create_list(&(infos->objects), obj);

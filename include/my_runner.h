@@ -21,14 +21,16 @@
 
 #define SCROLLING_SPEED 10
 
-#define GROUND_HEIGHT 180
+#define GROUND_HEIGHT 184
 
 #define BLOCK_SIZE 64
 
 #define PLAYER_POS 100
+#define GRAVITY 1
 
 enum texture {PLAYER_TEXT,
             BLOCK_TEXT,
+            SPIKE_TEXT,
             GROUND_TEXT,
             LANDSCAPE_TEXT,
             SKY_TEXT};
@@ -42,9 +44,9 @@ typedef struct object {
     enum texture texture;
     sfSprite *sprite;
     sfVector2f pos;
-    sfVector2f acceleration;
+    sfVector2f acc;
     float rot;
-    void (*update)(struct object*, list_t*, unsigned int);
+    void (*update)(struct object*, list_t**, unsigned int);
 } object_t;
 
 typedef struct {
@@ -54,7 +56,7 @@ typedef struct {
     object_t *player;
 } infos_t;
 
-typedef void (*update_fct_t)(object_t*, list_t*, unsigned int);
+typedef void (*update_fct_t)(object_t*, list_t**, unsigned int);
 
 infos_t *create_infos(void);
 
@@ -66,13 +68,17 @@ void move_backgrounds(infos_t *infos, unsigned int pos);
 void destroy_backgrounds(list_t *backgrounds);
 list_t *create_backgrounds(infos_t *infos);
 
-void set_position(object_t *object, unsigned int x, unsigned int y);
+void set_position(object_t *object, int x, int y);
 void set_rotation(object_t *object, float rot);
-void destroy_object(object_t *object);
+void destroy_object(object_t *object, list_t *list);
 void destroy_objects(list_t *list);
 object_t *create_object(infos_t *infos, enum object_type type,
 enum texture text_id, update_fct_t up_fct);
 
 object_t *create_player(infos_t *infos);
+
+int load_level(char *filepath, infos_t *infos);
+
+void update_block(object_t *obj, list_t **objs, unsigned int elapsed);
 
 #endif /* !MY_RUNNER_H_ */

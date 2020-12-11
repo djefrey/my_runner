@@ -6,6 +6,7 @@
 */
 
 #include <SFML/Graphics.h>
+#include <math.h>
 #include "my_runner.h"
 
 static char check_collision(object_t* p_obj, object_t *obj)
@@ -17,9 +18,9 @@ static char check_collision(object_t* p_obj, object_t *obj)
 
     if ((p_posx >= o_posx && p_posx <= o_posx + BLOCK_SIZE) || (p_posx
     + BLOCK_SIZE >= o_posx&& p_posx + BLOCK_SIZE <= o_posx + BLOCK_SIZE)) {
-        if (p_obj->acceleration.y > 0 && ABS((p_top + BLOCK_SIZE - o_top)) < 12)
+        if (p_obj->acc.y > 0 && ABS((p_top + BLOCK_SIZE - o_top)) < 8)
             return (2);
-        else if(p_top + BLOCK_SIZE <= o_top || p_top >= o_top + BLOCK_SIZE)
+        else if (p_top + BLOCK_SIZE <= o_top || p_top >= o_top + BLOCK_SIZE)
             return (0);
         else
             return (1);
@@ -27,26 +28,35 @@ static char check_collision(object_t* p_obj, object_t *obj)
         return (0);
 }
 
-void update_player(object_t *obj, list_t *objs, unsigned int elapsed)
+static void set_player_on_ground(object_t *obj)
+{
+    obj->acc.y = 0;
+    obj->pos.y = (int) (round(obj->pos.y / 64.0)) * 64;
+}
+
+void update_player(object_t *obj, list_t **objs, unsigned int elapsed)
 {
     char result;
     object_t *block;
 
     if (obj->pos.y + BLOCK_SIZE < WINDOW_HEIGHT - GROUND_HEIGHT)
-        obj->acceleration.y += elapsed;
-    else if(obj->acceleration.y > 0)
-        obj->acceleration.y = 0;
-    for (; objs; objs = objs->next) {
-        block = (object_t*) objs->data;
+        obj->acc.y += GRAVITY * elapsed;
+    if(obj->acc.y > 0 && obj->pos.y + BLOCK_SIZE >= WINDOW_HEIGHT - GROUND_HEIGHT)
+        set_player_on_ground(obj);
+    for (list_t *list = *objs; list; list = list->next) {
+        block = (object_t*) list->data;
         if (block->type == PLAYER)
             continue;
         result = check_collision(obj, block);
-        if (result == 2)
-            obj->acceleration.y = 0;
-        else if(result == 1)
-            printf("ooof\n");
+        if (result == 2) {
+            if (block->type == BLOCK)
+                set_player_on_ground(obj);
+            else if (block->type == SPIKE)
+                destroy_object(obj, objs);
+        } else if(result == 1)
+            destroy_object(obj, objs);
     }
-    set_position(obj, obj->pos.x, obj->pos.y + obj->acceleration.y);
+    set_position(obj, obj->pos.x, obj->pos.y + obj->acc.y);
 }
 
 object_t *create_player(infos_t *infos)
