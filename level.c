@@ -33,8 +33,10 @@ int load_level(char *filepath, infos_t *infos)
     size_t len = 0;
     ssize_t nread = 0;
 
-    if (file == NULL)
+    if (file == NULL) {
+        write(2, "Level file not found\n", 21);
         return (1);
+    }
     for (int i = 0; (nread = getline(&buff, &len, file)) >= 0; i++)
         read_line(buff, nread, i, infos);
     free(buff);

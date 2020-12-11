@@ -65,6 +65,7 @@ list_t *create_backgrounds(infos_t *infos)
     for (int i = 0; i < 3 && !destroy; i++, cpy = cpy->next)
         destroy = cpy->data == NULL;
     if (destroy) {
+        write(2, "Backgrounds failed to generate\n", 31);
         destroy_backgrounds(list);
         return (NULL);
     } else

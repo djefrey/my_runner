@@ -52,6 +52,7 @@ list_t *load_textures(void)
             destroy = 1;
     }
     if (destroy) {
+        write(2, "Textures failed to load\n", 24);
         destroy_textures(list);
         return (NULL);
     } else

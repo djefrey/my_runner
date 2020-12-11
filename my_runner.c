@@ -70,7 +70,7 @@ int game(sfRenderWindow *window)
     infos_t *infos = create_infos();
     object_t *obj;
 
-    if (!infos || load_level("./level.txt", infos))
+    if (!infos || load_level("./bonus/level.txt", infos))
         return (84);
     loop(window, infos);
     destroy_infos(infos);
