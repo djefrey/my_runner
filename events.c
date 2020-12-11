@@ -20,7 +20,7 @@ static void manage_keyboard(sfKeyEvent keyEv,
 infos_t *infos, unsigned int elapsed)
 {
     if (keyEv.type == sfEvtKeyPressed) {
-        if (keyEv.code == sfKeySpace && ABS(infos->player->acc.y) < 0.01)
+        if (keyEv.code == sfKeySpace && infos->player->acc.y == 0)
             infos->player->acc.y -= 20 * elapsed;
     }
 }

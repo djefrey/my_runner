@@ -30,15 +30,13 @@ int load_level(char *filepath, infos_t *infos)
 {
     FILE *file = fopen(filepath, "r");
     char *buff = NULL;
-    int len = 0;
-    int nread = 0;
+    size_t len = 0;
+    ssize_t nread = 0;
 
     if (file == NULL)
         return (1);
-    for (int i = 0; (nread = getline(&buff, &len, file)) != -1; i++) {
+    for (int i = 0; (nread = getline(&buff, &len, file)) >= 0; i++)
         read_line(buff, nread, i, infos);
-        len = 0;
-    }
     free(buff);
     fclose(file);
     return (0);

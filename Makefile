@@ -13,7 +13,8 @@ SRC		=	main.c			\
 			objects.c		\
 			textures.c		\
 			player.c		\
-			level.c
+			level.c			\
+			physics.c
 LIB_DIR	=	./mylib
 INC_DIR	=	./include
 CFLAGS	+=	-W -Wall -I$(INC_DIR)

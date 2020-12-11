@@ -25,7 +25,7 @@
 
 #define BLOCK_SIZE 64
 
-#define PLAYER_POS 100
+#define PLAYER_POS 128
 #define GRAVITY 1
 
 enum texture {PLAYER_TEXT,
@@ -76,6 +76,7 @@ object_t *create_object(infos_t *infos, enum object_type type,
 enum texture text_id, update_fct_t up_fct);
 
 object_t *create_player(infos_t *infos);
+char check_collision(object_t* p_obj, object_t *obj);
 
 int load_level(char *filepath, infos_t *infos);
 
