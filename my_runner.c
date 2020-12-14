@@ -11,25 +11,24 @@
 #include "my_list.h"
 #include "my_runner.h"
 
-void update_block(object_t *obj, list_t **objs, unsigned int elapsed)
-{
-    set_position(obj, obj->pos.x - (SCROLLING_SPEED * elapsed), obj->pos.y);
-    if (obj->pos.x <= -BLOCK_SIZE)
-        destroy_object(obj, objs);
-}
-
-static void update(infos_t *infos, unsigned int elapsed, unsigned int *bkgdpos)
+static void update(infos_t *infos, unsigned int elapsed, unsigned int *pos)
 {
     list_t *list = infos->objects;
     object_t *obj = NULL;
 
-    *bkgdpos += SCROLLING_SPEED;
-    move_backgrounds(infos, *bkgdpos);
+    *pos += SCROLLING_SPEED * elapsed;
+    move_backgrounds(infos, *pos);
     while (list) {
         obj = (object_t*) list->data;
         obj->time -= elapsed;
         (*(obj->update))(obj, &(infos->objects), elapsed);
         list = list->next;
+    }
+    if (infos->player->dead) {
+        reset_blocks_pos(infos->objects, *pos);
+        reset_player(infos->player);
+        *pos = 0;
+        infos->player->dead = 0;
     }
 }
 
@@ -54,13 +53,13 @@ static void draw(sfRenderWindow *window, infos_t *infos)
 static void loop(sfRenderWindow *window, infos_t *infos)
 {
     unsigned int elapsed = 0;
-    unsigned int bkgdpos = 0;
+    unsigned int pos = 0;
     sfClock *clock = sfClock_create();
 
     while (sfRenderWindow_isOpen(window)) {
         elapsed = sfClock_restart(clock).microseconds / FPS;
         analyse_events(window, infos, elapsed);
-        update(infos, elapsed, &bkgdpos);
+        update(infos, elapsed, &pos);
         draw(window, infos);
     }
     sfClock_destroy(clock);

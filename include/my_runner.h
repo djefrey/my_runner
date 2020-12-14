@@ -47,6 +47,7 @@ typedef struct object {
     sfVector2f acc;
     float rot;
     long time;
+    char dead;
     void (*update)(struct object*, list_t**, unsigned int);
 } object_t;
 
@@ -77,10 +78,12 @@ object_t *create_object(infos_t *infos, enum object_type type,
 enum texture text_id, update_fct_t up_fct);
 
 object_t *create_player(infos_t *infos);
+void reset_player(object_t *obj);
 char check_collision(object_t* p_obj, object_t *obj);
 
 int load_level(char *filepath, infos_t *infos);
 
-void update_block(object_t *obj, list_t **objs, unsigned int elapsed);
+void update_block(object_t *obj, list_t **objs, unsigned int);
+void reset_blocks_pos(list_t *objs, unsigned int pos);
 
 #endif /* !MY_RUNNER_H_ */

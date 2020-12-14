@@ -13,6 +13,7 @@ SRC		=	main.c			\
 			objects.c		\
 			textures.c		\
 			player.c		\
+			blocks.c		\
 			level.c			\
 			physics.c
 LIB_DIR	=	./mylib
