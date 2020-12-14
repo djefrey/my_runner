@@ -27,6 +27,7 @@ static void update(infos_t *infos, unsigned int elapsed, unsigned int *bkgdpos)
     move_backgrounds(infos, *bkgdpos);
     while (list) {
         obj = (object_t*) list->data;
+        obj->time -= elapsed;
         (*(obj->update))(obj, &(infos->objects), elapsed);
         list = list->next;
     }

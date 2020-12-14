@@ -21,7 +21,7 @@
 
 #define SCROLLING_SPEED 10
 
-#define GROUND_HEIGHT 184
+#define GROUND_HEIGHT 896
 
 #define BLOCK_SIZE 64
 
@@ -46,6 +46,7 @@ typedef struct object {
     sfVector2f pos;
     sfVector2f acc;
     float rot;
+    long time;
     void (*update)(struct object*, list_t**, unsigned int);
 } object_t;
 
