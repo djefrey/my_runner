@@ -24,7 +24,7 @@ static void update(infos_t *infos, unsigned int elapsed, unsigned int *pos)
         list = list->next;
     }
     if (infos->player->dead) {
-        reset_blocks_pos(infos->objects, *pos);
+        reset_blocks(infos->objects, *pos);
         reset_player(infos->player);
         *pos = 0;
     }
@@ -33,6 +33,7 @@ static void update(infos_t *infos, unsigned int elapsed, unsigned int *pos)
 static void draw(sfRenderWindow *window, infos_t *infos)
 {
     list_t *list = infos->backgrounds;
+    object_t *obj;
 
     sfRenderWindow_clear(window, sfBlack);
     while (list) {
@@ -41,8 +42,9 @@ static void draw(sfRenderWindow *window, infos_t *infos)
     }
     list = infos->objects;
     while (list) {
-        sfRenderWindow_drawSprite(window,
-        ((object_t*) list->data)->sprite, NULL);
+        obj = ((object_t*) list->data);
+        if (!obj->hide && obj->pos.x < WINDOW_WIDTH + BLOCK_SIZE)
+            sfRenderWindow_drawSprite(window, obj->sprite, NULL);
         list = list->next;
     }
     sfRenderWindow_display(window);
@@ -66,7 +68,6 @@ static void loop(sfRenderWindow *window, infos_t *infos)
 int game(sfRenderWindow *window, char *level)
 {
     infos_t *infos = create_infos();
-    object_t *obj;
 
     if (!infos || load_level(level, infos))
         return (84);

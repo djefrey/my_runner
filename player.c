@@ -24,13 +24,18 @@ static void detect_collision(player_t *player, object_t *block)
 
     switch (result) {
         case 1:
-            player->dead = 1;
+            if (block->type == COIN)
+                block->hide = 1;
+            else
+                player->dead = 1;
             break;
         case 2:
             if (block->type == BLOCK)
                 set_player_on_ground(player, block->pos.y);
             else if (block->type == SPIKE)
                 player->dead = 1;
+            else
+                block->hide = 1;
             break;
         case 3:
             player->acc.y = 0;
@@ -43,8 +48,10 @@ void update_player(object_t *obj, list_t **objs, unsigned int elapsed)
     player_t *player = (player_t*) obj;
     object_t *block;
 
-    if (obj->pos.y + BLOCK_SIZE < GROUND_HEIGHT)
+    if (obj->pos.y + BLOCK_SIZE < GROUND_HEIGHT) {
         obj->acc.y += GRAVITY * elapsed;
+        player->on_ground = 0;
+    }
     if(obj->acc.y > 0 && obj->pos.y + BLOCK_SIZE >= GROUND_HEIGHT)
         set_player_on_ground(player, GROUND_HEIGHT);
     for (list_t *list = *objs;  list != NULL; list = list->next) {
@@ -54,7 +61,7 @@ void update_player(object_t *obj, list_t **objs, unsigned int elapsed)
         detect_collision(player, block);
     }
     set_position(obj, obj->pos.x, obj->pos.y + obj->acc.y);
-    if (obj->acc.y != 0)
+    if (!player->on_ground)
         set_rotation(obj, obj->rot + 11.25 * elapsed);
 }
 

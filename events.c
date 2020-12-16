@@ -22,7 +22,7 @@ infos_t *infos, unsigned int elapsed)
     player_t *player = infos->player;
 
     if (keyEv.type == sfEvtKeyPressed) {
-        if (keyEv.code == sfKeySpace && player->acc.y == 0 && player->on_ground) {
+        if (keyEv.code == sfKeySpace && player->on_ground) {
             player->acc.y -= 20;
             player->on_ground = 0;
         }

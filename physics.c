@@ -16,6 +16,8 @@ char check_collision(object_t* p_obj, object_t *obj)
     int o_top = obj->pos.y;
     int o_bot = o_top + BLOCK_SIZE;
 
+    if (obj->hide)
+        return (0);
     if ((p_posx >= o_posx && p_posx <= o_posx + BLOCK_SIZE) || (p_posx
     + BLOCK_SIZE >= o_posx && p_posx + BLOCK_SIZE <= o_posx + BLOCK_SIZE)) {
         if (p_obj->acc.y >= 0 && ABS(p_bot - o_top) <= 32)

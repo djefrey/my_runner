@@ -25,19 +25,21 @@
 
 #define BLOCK_SIZE 64
 
-#define PLAYER_POS 128
+#define PLAYER_POS 256
 #define GRAVITY 1
 
 enum texture {PLAYER_TEXT,
             BLOCK_TEXT,
             SPIKE_TEXT,
+            COIN_TEXT,
             GROUND_TEXT,
             LANDSCAPE_TEXT,
             SKY_TEXT};
 
 enum object_type {PLAYER,
                 BLOCK,
-                SPIKE};
+                SPIKE,
+                COIN};
 
 typedef struct object {
     enum object_type type;
@@ -47,7 +49,8 @@ typedef struct object {
     sfVector2f acc;
     float rot;
     void (*update)(struct object*, list_t**, unsigned int);
-    char memfill[2];
+    char hide;
+    char memfill[1];
 } object_t;
 
 typedef struct player {
@@ -72,6 +75,7 @@ typedef struct {
 typedef void (*update_fct_t)(object_t*, list_t**, unsigned int);
 
 infos_t *create_infos(void);
+void *destroy_infos(infos_t *infos);
 
 sfTexture *get_texture(infos_t *infos, enum texture id);
 void destroy_textures(list_t *textures);
@@ -90,11 +94,14 @@ enum texture text_id, update_fct_t up_fct);
 
 player_t *create_player(infos_t *infos);
 void reset_player(player_t *obj);
-char check_collision(player_t* p_obj, object_t *obj);
+char check_collision(object_t* p_obj, object_t *obj);
 
 int load_level(char *filepath, infos_t *infos);
 
 void update_block(object_t *obj, list_t **objs, unsigned int);
-void reset_blocks_pos(list_t *objs, unsigned int pos);
+void reset_blocks(list_t *objs, unsigned int pos);
+
+void analyse_events(sfRenderWindow *window,
+infos_t *infos, unsigned int elapsed);
 
 #endif /* !MY_RUNNER_H_ */

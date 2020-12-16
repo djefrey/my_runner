@@ -16,12 +16,19 @@ static void read_line(char *line, int len, int y, infos_t *infos)
     object_t *obj;
 
     for (int i = 0; i < len; i++, line += 1) {
-        if (*line == '1')
-            obj = create_object(infos, BLOCK, BLOCK_TEXT, &update_block);
-        else if (*line == '2')
-            obj = create_object(infos, SPIKE, SPIKE_TEXT, &update_block);
-        else
-            continue;
+        switch (*line) {
+            case '1':
+                obj = create_object(infos, BLOCK, BLOCK_TEXT, &update_block);
+                break;
+            case '2':
+                obj = create_object(infos, SPIKE, SPIKE_TEXT, &update_block);
+                break;
+            case '3':
+                obj = create_object(infos, COIN, COIN_TEXT, &update_block);
+                break;
+            default:
+                continue;
+        }
         set_position(obj, i * 64, y * 64);
     }
 }
