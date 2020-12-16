@@ -51,13 +51,11 @@ void update_player(object_t *obj, void *infos_void, unsigned int elapsed)
     infos_t *infos = (infos_t*) infos_void;
     player_t *player = (player_t*) obj;
     object_t *block;
+    char on_ground;
 
-    if (obj->pos.y + BLOCK_SIZE < GROUND_HEIGHT) {
+    if (!player->on_ground)
         obj->acc.y += GRAVITY * elapsed;
-        player->on_ground = 0;
-    }
-    if(obj->acc.y > 0 && obj->pos.y + BLOCK_SIZE >= GROUND_HEIGHT)
-        set_player_on_ground(player, GROUND_HEIGHT);
+    player->on_ground = 0;
     for (list_t *list = infos->objects;  list != NULL; list = list->next) {
         block = (object_t*) list->data;
         if (block->type == PLAYER)
@@ -66,12 +64,12 @@ void update_player(object_t *obj, void *infos_void, unsigned int elapsed)
     }
     set_position(obj, obj->pos.x, obj->pos.y + obj->acc.y);
     if (!player->on_ground)
-        set_rotation(obj, obj->rot + 11.25 * elapsed);
+        set_rotation(obj, obj->rot + 5 * elapsed);
 }
 
 void reset_player(player_t *player)
 {
-    player->on_ground = 1;
+    player->on_ground = 0;
     player->dead = 0;
     set_position((object_t*) player, PLAYER_POS, GROUND_HEIGHT - BLOCK_SIZE);
     set_rotation((object_t*) player, 0);

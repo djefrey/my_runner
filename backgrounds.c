@@ -18,7 +18,7 @@ void move_backgrounds(infos_t *infos, unsigned int pos)
     sfIntRect bkgd_pos = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
 
     for (int i = 1; i < 4; i++, backgrounds = backgrounds->next) {
-        offset = ((int) ceil(pos * (1.0 / (4 - i)))) % WINDOW_WIDTH;
+        offset = ((int) ceil(pos * (1.0 / (12 - i * 3)))) % WINDOW_WIDTH;
         bkgd_pos.left = offset;
         bkgd_pos.width = WINDOW_WIDTH + offset;
         sfSprite_setTextureRect((sfSprite*) backgrounds->data, bkgd_pos);
