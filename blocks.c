@@ -7,7 +7,7 @@
 
 #include "my_runner.h"
 
-void update_block(object_t *obj, list_t **objs, unsigned int elapsed)
+void update_block(object_t *obj, void *infos, unsigned int elapsed)
 {
     set_position(obj, obj->pos.x - SCROLLING_SPEED * elapsed, obj->pos.y);
     if (obj->pos.x <= -BLOCK_SIZE)

@@ -15,6 +15,7 @@ void *destroy_infos(infos_t *infos)
     destroy_textures(infos->textures);
     destroy_backgrounds(infos->backgrounds);
     destroy_objects(infos->objects);
+    score_display_destroy(infos->score_display);
     free(infos);
     return (NULL);
 }
@@ -25,15 +26,12 @@ infos_t *create_infos(void)
 
     if (infos == NULL)
         return (NULL);
-    infos->textures = load_textures();
-    if (!(infos->textures))
-        return (destroy_infos(infos));
-    infos->backgrounds = create_backgrounds(infos);
-    if (!(infos->backgrounds))
-        return (destroy_infos(infos));
+    infos->score = 0;
     infos->objects = NULL;
-    infos->player = create_player(infos);
-    if (!(infos->player))
+    if (!(infos->textures = load_textures()) ||
+    !(infos->backgrounds = create_backgrounds(infos)) ||
+    !(infos->player = create_player(infos)) ||
+    !(infos->score_display = score_display_create()))
         return (destroy_infos(infos));
     return (infos);
 }

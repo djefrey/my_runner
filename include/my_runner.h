@@ -10,6 +10,7 @@
 
 #include <SFML/Graphics.h>
 #include "my_list.h"
+#include "framebuffer.h"
 
 #define WINDOW_WIDTH 1920
 #define WINDOW_HEIGHT 1080
@@ -27,6 +28,8 @@
 
 #define PLAYER_POS 256
 #define GRAVITY 1
+
+#define COIN_SCORE 150
 
 enum texture {PLAYER_TEXT,
             BLOCK_TEXT,
@@ -48,7 +51,7 @@ typedef struct object {
     sfVector2f pos;
     sfVector2f acc;
     float rot;
-    void (*update)(struct object*, list_t**, unsigned int);
+    void (*update)(struct object*, void*, unsigned int);
     char hide;
     char memfill[1];
 } object_t;
@@ -60,19 +63,28 @@ typedef struct player {
     sfVector2f pos;
     sfVector2f acc;
     float rot;
-    void (*update)(struct object*, list_t**, unsigned int);
+    void (*update)(struct object*, void*, unsigned int);
     char dead;
     char on_ground;
 } player_t;
 
 typedef struct {
+    int score_display;
+    framebuffer_t *fb;
+    sfTexture *texture;
+    sfSprite *sprite;
+} score_t;
+
+typedef struct {
+    int score;
     list_t *textures;
     list_t *backgrounds;
     list_t *objects;
+    score_t *score_display;
     player_t *player;
 } infos_t;
 
-typedef void (*update_fct_t)(object_t*, list_t**, unsigned int);
+typedef void (*update_fct_t)(object_t*, void*, unsigned int);
 
 infos_t *create_infos(void);
 void *destroy_infos(infos_t *infos);
@@ -98,10 +110,14 @@ char check_collision(object_t* p_obj, object_t *obj);
 
 int load_level(char *filepath, infos_t *infos);
 
-void update_block(object_t *obj, list_t **objs, unsigned int);
+void update_block(object_t *obj, void *objs, unsigned int);
 void reset_blocks(list_t *objs, unsigned int pos);
 
 void analyse_events(sfRenderWindow *window,
 infos_t *infos, unsigned int elapsed);
+
+score_t *score_display_create(void);
+void score_display_destroy(score_t *score);
+void set_score_display(score_t *score, int nbr);
 
 #endif /* !MY_RUNNER_H_ */

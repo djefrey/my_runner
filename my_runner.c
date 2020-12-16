@@ -20,14 +20,16 @@ static void update(infos_t *infos, unsigned int elapsed, unsigned int *pos)
     move_backgrounds(infos, *pos);
     while (list) {
         obj = (object_t*) list->data;
-        (*(obj->update))(obj, &(infos->objects), elapsed);
+        (*(obj->update))(obj, infos, elapsed);
         list = list->next;
     }
     if (infos->player->dead) {
         reset_blocks(infos->objects, *pos);
         reset_player(infos->player);
+        infos->score = 0;
         *pos = 0;
     }
+    set_score_display(infos->score_display, infos->score);
 }
 
 static void draw(sfRenderWindow *window, infos_t *infos)
@@ -47,6 +49,7 @@ static void draw(sfRenderWindow *window, infos_t *infos)
             sfRenderWindow_drawSprite(window, obj->sprite, NULL);
         list = list->next;
     }
+    sfRenderWindow_drawSprite(window, infos->score_display->sprite, NULL);
     sfRenderWindow_display(window);
 }
 
