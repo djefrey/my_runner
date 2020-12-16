@@ -21,7 +21,7 @@
 
 #define SCROLLING_SPEED 10
 
-#define GROUND_HEIGHT 896
+#define GROUND_HEIGHT 960
 
 #define BLOCK_SIZE 64
 
@@ -46,16 +46,27 @@ typedef struct object {
     sfVector2f pos;
     sfVector2f acc;
     float rot;
-    long time;
-    char dead;
     void (*update)(struct object*, list_t**, unsigned int);
+    char memfill[2];
 } object_t;
+
+typedef struct player {
+    enum object_type type;
+    enum texture texture;
+    sfSprite *sprite;
+    sfVector2f pos;
+    sfVector2f acc;
+    float rot;
+    void (*update)(struct object*, list_t**, unsigned int);
+    char dead;
+    char on_ground;
+} player_t;
 
 typedef struct {
     list_t *textures;
     list_t *backgrounds;
     list_t *objects;
-    object_t *player;
+    player_t *player;
 } infos_t;
 
 typedef void (*update_fct_t)(object_t*, list_t**, unsigned int);
@@ -77,9 +88,9 @@ void destroy_objects(list_t *list);
 object_t *create_object(infos_t *infos, enum object_type type,
 enum texture text_id, update_fct_t up_fct);
 
-object_t *create_player(infos_t *infos);
-void reset_player(object_t *obj);
-char check_collision(object_t* p_obj, object_t *obj);
+player_t *create_player(infos_t *infos);
+void reset_player(player_t *obj);
+char check_collision(player_t* p_obj, object_t *obj);
 
 int load_level(char *filepath, infos_t *infos);
 

@@ -62,7 +62,6 @@ enum texture text_id, update_fct_t up_fct)
     obj->pos = ((sfVector2f) {0, 0});
     obj->acc = ((sfVector2f) {0, 0});
     obj->rot = 0;
-    obj->time = 0;
     obj->dead = 0;
     obj->update = up_fct;
     create_list(&(infos->objects), obj);

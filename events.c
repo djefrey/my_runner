@@ -19,9 +19,13 @@ infos_t *infos,unsigned int elapsed)
 static void manage_keyboard(sfKeyEvent keyEv,
 infos_t *infos, unsigned int elapsed)
 {
+    player_t *player = infos->player;
+
     if (keyEv.type == sfEvtKeyPressed) {
-        if (keyEv.code == sfKeySpace && infos->player->acc.y == 0)
-            infos->player->acc.y -= 20 * elapsed;
+        if (keyEv.code == sfKeySpace && player->acc.y == 0 && player->on_ground) {
+            player->acc.y -= 20;
+            player->on_ground = 0;
+        }
     }
 }
 

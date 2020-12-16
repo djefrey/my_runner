@@ -9,63 +9,68 @@
 #include <math.h>
 #include "my_runner.h"
 
-static void set_player_on_ground(object_t *obj, int ground_y)
+static void set_player_on_ground(player_t *player, int ground_y)
 {
-    obj->acc.y = 0;
-    obj->pos.y = ground_y - 64;
-    if ((int) round(obj->rot) % 90 != 0)
-        set_rotation(obj, round(obj->rot / 90.0) * 90);
+    player->acc.y = 0;
+    player->pos.y = ground_y - 64;
+    player->on_ground = 1;
+    if ((int) round(player->rot) % 90 != 0)
+        set_rotation(player, round(player->rot / 90.0) * 90);
 }
 
-static void detect_collision(object_t *obj, object_t *block)
+static void detect_collision(player_t *player, object_t *block)
 {
-    char result = check_collision(obj, block);
+    char result = check_collision(player, block);
 
     switch (result) {
         case 1:
-            obj->dead = 1;
+            player->dead = 1;
             break;
         case 2:
             if (block->type == BLOCK)
-                set_player_on_ground(obj, block->pos.y);
+                set_player_on_ground(player, block->pos.y);
             else if (block->type == SPIKE)
-                obj->dead = 1;
+                player->dead = 1;
             break;
         case 3:
-            obj->acc.y = 0;
+            player->acc.y = 0;
             break;
     }
 }
 
 void update_player(object_t *obj, list_t **objs, unsigned int elapsed)
 {
+    player_t *player = (player_t*) obj;
     object_t *block;
 
     if (obj->pos.y + BLOCK_SIZE < GROUND_HEIGHT)
         obj->acc.y += GRAVITY * elapsed;
     if(obj->acc.y > 0 && obj->pos.y + BLOCK_SIZE >= GROUND_HEIGHT)
-        set_player_on_ground(obj, GROUND_HEIGHT);
+        set_player_on_ground(player, GROUND_HEIGHT);
     for (list_t *list = *objs;  list != NULL; list = list->next) {
         block = (object_t*) list->data;
         if (block->type == PLAYER)
             continue;
-        detect_collision(obj, block);
+        detect_collision(player, block);
     }
     set_position(obj, obj->pos.x, obj->pos.y + obj->acc.y);
     if (obj->acc.y != 0)
         set_rotation(obj, obj->rot + 11.25 * elapsed);
 }
 
-void reset_player(object_t *obj)
+void reset_player(player_t *player)
 {
-    set_position(obj, PLAYER_POS, GROUND_HEIGHT - BLOCK_SIZE);
-    set_rotation(obj, 0);
+    player->on_ground = 1;
+    player->dead = 0;
+    set_position(player, PLAYER_POS, GROUND_HEIGHT - BLOCK_SIZE);
+    set_rotation(player, 0);
 }
 
-object_t *create_player(infos_t *infos)
+player_t *create_player(infos_t *infos)
 {
     object_t *obj = create_object(infos, PLAYER, PLAYER_TEXT, &update_player);
+    player_t *player = (player_t*) obj;
 
-    reset_player(obj);
-    return (obj);
+    reset_player(player);
+    return (player);
 }

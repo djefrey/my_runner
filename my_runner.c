@@ -20,7 +20,6 @@ static void update(infos_t *infos, unsigned int elapsed, unsigned int *pos)
     move_backgrounds(infos, *pos);
     while (list) {
         obj = (object_t*) list->data;
-        obj->time -= elapsed;
         (*(obj->update))(obj, &(infos->objects), elapsed);
         list = list->next;
     }
@@ -28,7 +27,6 @@ static void update(infos_t *infos, unsigned int elapsed, unsigned int *pos)
         reset_blocks_pos(infos->objects, *pos);
         reset_player(infos->player);
         *pos = 0;
-        infos->player->dead = 0;
     }
 }
 
@@ -65,12 +63,12 @@ static void loop(sfRenderWindow *window, infos_t *infos)
     sfClock_destroy(clock);
 }
 
-int game(sfRenderWindow *window)
+int game(sfRenderWindow *window, char *level)
 {
     infos_t *infos = create_infos();
     object_t *obj;
 
-    if (!infos || load_level("./bonus/level.txt", infos))
+    if (!infos || load_level(level, infos))
         return (84);
     loop(window, infos);
     destroy_infos(infos);

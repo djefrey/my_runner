@@ -21,7 +21,7 @@ static sfRenderWindow *create_window(void)
 int main(int ac, char *av[])
 {
     sfRenderWindow *window = create_window();
-    int ret = game(window);
+    int ret = game(window, "./bonus/level.txt");
 
     sfRenderWindow_destroy(window);
     return (ret);
