@@ -18,8 +18,7 @@
 #define BUFFER_WIDTH (NBR_DIGITS * (DIGIT_SIZE + DIGIT_PADDING + 1))
 #define BUFFER_HEIGHT ((DIGIT_SIZE) * 2 + 2)
 
-#define DIGIT_COLOR sfGreen
-
+#define DIGIT_COLOR sfBlack
 /*
 ** -- 0 --
 **|       |

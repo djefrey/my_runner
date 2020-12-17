@@ -77,7 +77,7 @@ score_t *score_display_create(void)
 {
     score_t *score = malloc(sizeof(score_t));
     sfVector2f sprite_pos =
-    {BUFFER_HEIGHT / 3, WINDOW_HEIGHT - BUFFER_HEIGHT * 1.33};
+    {BUFFER_HEIGHT / 3, WINDOW_HEIGHT * 0.01};
 
     if (score == NULL)
         return (NULL);
