@@ -48,6 +48,7 @@ void set_score_display(score_t *score, int nbr)
 
     if (nbr == score->score_display)
         return;
+    score->score_display = nbr;
     framebuffer_clear(score->fb);
     if (nbr < 0) {
         print_line(score->fb, 0, DIGIT_SIZE + 1, 1);
@@ -62,7 +63,6 @@ void set_score_display(score_t *score, int nbr)
     sfTexture_updateFromPixels(score->texture, score->fb->pixels,
     score->fb->width, score->fb->height, 0, 0);
     sfSprite_setTexture(score->sprite, score->texture, 0);
-    score->score_display = nbr;
 }
 
 void score_display_destroy(score_t *score)
