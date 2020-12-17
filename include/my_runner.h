@@ -32,7 +32,9 @@
 #define COIN_SCORE 150
 
 enum texture {PLAYER_TEXT,
-            BLOCK_TEXT,
+            STONE_TEXT,
+            GRASS_TEXT,
+            DIRT_TEXT,
             FIRE_TEXT,
             COIN_TEXT,
             GROUND_TEXT,

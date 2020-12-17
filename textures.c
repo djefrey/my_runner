@@ -7,6 +7,7 @@
 
 #include <SFML/Graphics/Texture.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include "my_list.h"
 #include "my_runner.h"
 #include "textures_list.h"
@@ -48,7 +49,7 @@ list_t *load_textures(void)
     char destroy = 0;
 
     for (int i = 0; i < TEXTURES_NB && !destroy; i++) {
-        if (load_texture(&list, TEXTURES_PATH[i]))
+        if (load_texture(&list, TEXTURES_PATH[TEXTURES_NB - i - 1]))
             destroy = 1;
     }
     if (destroy) {

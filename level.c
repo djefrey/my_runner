@@ -9,26 +9,20 @@
 #include <stdio.h>
 #include <unistd.h>
 #include "my_runner.h"
+#include "level.h"
 #include "my_list.h"
 
 static void read_line(char *line, int len, int y, infos_t *infos)
 {
+    char id;
     object_t *obj;
 
     for (int i = 0; i < len; i++, line += 1) {
-        switch (*line) {
-            case '1':
-                obj = create_object(infos, BLOCK, BLOCK_TEXT, &update_block);
-                break;
-            case '2':
-                obj = create_object(infos, FIRE, FIRE_TEXT, &update_fire);
-                break;
-            case '3':
-                obj = create_object(infos, COIN, COIN_TEXT, &update_block);
-                break;
-            default:
-                continue;
-        }
+        if (*line < '0' || *line > '9')
+            continue;
+        id = *line - '0';
+        obj = create_object(infos, OBJECT_LIST[id],
+        TEXTURE_LIST[id], UPDATE_LIST[id]);
         set_position(obj, i * 64, y * 64);
     }
 }
