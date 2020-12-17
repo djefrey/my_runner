@@ -48,13 +48,13 @@ object_t *create_object(infos_t *infos, enum object_type type,
 enum texture text_id, update_fct_t up_fct)
 {
     object_t *obj = malloc(sizeof(object_t));
-    sfSprite *sprite = sfSprite_create();
+    sfSprite *sprite;
 
-    if (obj == NULL) {
-        sfSprite_destroy(sprite);
+    if (obj == NULL)
         return (NULL);
-    }
+    sprite = sfSprite_create();
     sfSprite_setTexture(sprite, get_texture(infos, text_id), sfFalse);
+    sfSprite_setTextureRect(sprite, (sfIntRect) {0, 0, 64, 64});
     sfSprite_setOrigin(sprite, ((sfVector2f) {32, 32}));
     obj->type = type;
     obj->texture = text_id;
@@ -62,6 +62,7 @@ enum texture text_id, update_fct_t up_fct)
     obj->pos = ((sfVector2f) {0, 0});
     obj->acc = ((sfVector2f) {0, 0});
     obj->rot = 0;
+    obj->time = 0;
     obj->update = up_fct;
     obj->hide = 0;
     create_list(&(infos->objects), obj);

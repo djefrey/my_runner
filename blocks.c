@@ -14,6 +14,20 @@ void update_block(object_t *obj, void *infos, unsigned int elapsed)
         obj->hide = 1;
 }
 
+void update_fire(object_t *obj, void *infos, unsigned int elapsed)
+{
+    int x;
+
+    update_block(obj, infos, elapsed);
+    obj->time += elapsed;
+    if (obj->time >= 4) {
+        x = sfSprite_getTextureRect(obj->sprite).left;
+        x = x == 128 ? 0 : x + 64;
+        sfSprite_setTextureRect(obj->sprite, (sfIntRect) {x, 0, 64, 64});
+        obj->time = 0;
+    }
+}
+
 void reset_blocks(list_t *list, unsigned int pos)
 {
     object_t *obj;

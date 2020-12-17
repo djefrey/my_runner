@@ -33,7 +33,7 @@
 
 enum texture {PLAYER_TEXT,
             BLOCK_TEXT,
-            SPIKE_TEXT,
+            FIRE_TEXT,
             COIN_TEXT,
             GROUND_TEXT,
             LANDSCAPE_TEXT,
@@ -41,7 +41,7 @@ enum texture {PLAYER_TEXT,
 
 enum object_type {PLAYER,
                 BLOCK,
-                SPIKE,
+                FIRE,
                 COIN};
 
 typedef struct object {
@@ -51,6 +51,7 @@ typedef struct object {
     sfVector2f pos;
     sfVector2f acc;
     float rot;
+    long time;
     void (*update)(struct object*, void*, unsigned int);
     char hide;
     char memfill[1];
@@ -63,6 +64,7 @@ typedef struct player {
     sfVector2f pos;
     sfVector2f acc;
     float rot;
+    long time;
     void (*update)(struct object*, void*, unsigned int);
     char dead;
     char on_ground;
@@ -111,6 +113,7 @@ char check_collision(object_t* p_obj, object_t *obj);
 int load_level(char *filepath, infos_t *infos);
 
 void update_block(object_t *obj, void *objs, unsigned int);
+void update_fire(object_t *obj, void *infos, unsigned int elapsed);
 void reset_blocks(list_t *objs, unsigned int pos);
 
 void analyse_events(sfRenderWindow *window,

@@ -21,7 +21,7 @@ static void read_line(char *line, int len, int y, infos_t *infos)
                 obj = create_object(infos, BLOCK, BLOCK_TEXT, &update_block);
                 break;
             case '2':
-                obj = create_object(infos, SPIKE, SPIKE_TEXT, &update_block);
+                obj = create_object(infos, FIRE, FIRE_TEXT, &update_fire);
                 break;
             case '3':
                 obj = create_object(infos, COIN, COIN_TEXT, &update_block);

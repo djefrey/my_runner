@@ -33,12 +33,6 @@ static void detect_collision(player_t *player, object_t *block, infos_t *infos)
         case 2:
             if (block->type == BLOCK)
                 set_player_on_ground(player, block->pos.y);
-            else if (block->type == SPIKE)
-                player->dead = 1;
-            else {
-                block->hide = 1;
-                infos->score += COIN_SCORE;
-            }
             break;
         case 3:
             player->acc.y = 0;
@@ -51,7 +45,6 @@ void update_player(object_t *obj, void *infos_void, unsigned int elapsed)
     infos_t *infos = (infos_t*) infos_void;
     player_t *player = (player_t*) obj;
     object_t *block;
-    char on_ground;
 
     if (!player->on_ground)
         obj->acc.y += GRAVITY * elapsed;

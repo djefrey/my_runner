@@ -19,7 +19,7 @@ const char *TEXTURES_PATH[] = {
     "./assets/textures/landscape.png",
     "./assets/textures/ground.png",
     "./assets/textures/coin.png",
-    "./assets/textures/spike.png",
+    "./assets/textures/fire.png",
     "./assets/textures/block.png",
     "./assets/textures/player.png"
 };
