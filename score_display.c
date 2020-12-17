@@ -13,10 +13,10 @@
 static void print_line(framebuffer_t *bf, int x, int y, char horizontal)
 {
     if (horizontal) {
-        for (int i = 0; i < DIGIT_SIZE; i++)
+        for (int i = 0; i <= DIGIT_SIZE; i++)
             my_put_pixel(bf, x + i, y, DIGIT_COLOR);
     } else {
-        for (int i = 0; i < DIGIT_SIZE; i++)
+        for (int i = 0; i <= DIGIT_SIZE; i++)
             my_put_pixel(bf, x, y + i, DIGIT_COLOR);
     }
 }
