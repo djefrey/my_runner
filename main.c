@@ -12,8 +12,14 @@ static sfRenderWindow *create_window(void)
 {
     sfVideoMode mode = {WINDOW_WIDTH, WINDOW_HEIGHT, 32};
     sfRenderWindow *window =
-    sfRenderWindow_create(mode, WINDOW_TITLE, sfTitlebar | sfClose, NULL);
+    sfRenderWindow_create(mode, WINDOW_TITLE, sfDefaultStyle, NULL);
+    sfView *view = sfView_create();
+    sfVector2f view_size = {WINDOW_WIDTH, WINDOW_HEIGHT};
+    sfVector2f view_center = {WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2};
 
+    sfView_setSize(view, view_size);
+    sfView_setCenter(view, view_center);
+    sfRenderWindow_setView(window, view);
     sfRenderWindow_setFramerateLimit(window, 60);
     return (window);
 }
