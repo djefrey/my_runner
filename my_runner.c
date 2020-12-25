@@ -11,7 +11,7 @@
 #include "my_list.h"
 #include "my_runner.h"
 
-static void update(infos_t *infos, unsigned int elapsed, unsigned int *pos)
+static void update(infos_t *infos, float elapsed, float *pos)
 {
     list_t *list = infos->objects;
     object_t *obj = NULL;
@@ -55,8 +55,8 @@ static void draw(sfRenderWindow *window, infos_t *infos)
 
 static void loop(sfRenderWindow *window, infos_t *infos)
 {
-    unsigned int elapsed = 0;
-    unsigned int pos = 0;
+    float elapsed = 0;
+    float pos = 0;
     sfClock *clock = sfClock_create();
 
     while (sfRenderWindow_isOpen(window)) {

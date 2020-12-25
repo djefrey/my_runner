@@ -7,14 +7,15 @@
 
 #include "my_runner.h"
 
-void update_block(object_t *obj, void *infos, unsigned int elapsed)
+void update_block(object_t *obj, void *infos, float elapsed)
 {
-    set_position(obj, obj->pos.x - SCROLLING_SPEED * elapsed, obj->pos.y);
+    set_position(obj, obj->pos.x - SCROLLING_SPEED *
+    ((int) elapsed), obj->pos.y);
     if (obj->pos.x <= -BLOCK_SIZE)
         obj->hide = 1;
 }
 
-void update_fire(object_t *obj, void *infos, unsigned int elapsed)
+void update_fire(object_t *obj, void *infos, float elapsed)
 {
     int x;
 
@@ -28,7 +29,7 @@ void update_fire(object_t *obj, void *infos, unsigned int elapsed)
     }
 }
 
-void reset_blocks(list_t *list, unsigned int pos)
+void reset_blocks(list_t *list, float pos)
 {
     object_t *obj;
 

@@ -20,7 +20,7 @@ static sfRenderWindow *create_window(void)
     sfView_setSize(view, view_size);
     sfView_setCenter(view, view_center);
     sfRenderWindow_setView(window, view);
-    sfRenderWindow_setFramerateLimit(window, 60);
+    sfRenderWindow_setFramerateLimit(window, 30);
     return (window);
 }
 

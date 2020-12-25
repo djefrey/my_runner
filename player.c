@@ -40,7 +40,7 @@ static void detect_collision(player_t *player, object_t *block, infos_t *infos)
     }
 }
 
-void update_player(object_t *obj, void *infos_void, unsigned int elapsed)
+void update_player(object_t *obj, void *infos_void, float elapsed)
 {
     infos_t *infos = (infos_t*) infos_void;
     player_t *player = (player_t*) obj;

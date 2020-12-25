@@ -53,8 +53,8 @@ typedef struct object {
     sfVector2f pos;
     sfVector2f acc;
     float rot;
-    long time;
-    void (*update)(struct object*, void*, unsigned int);
+    float time;
+    void (*update)(struct object*, void*, float);
     char hide;
     char memfill[1];
 } object_t;
@@ -66,8 +66,8 @@ typedef struct player {
     sfVector2f pos;
     sfVector2f acc;
     float rot;
-    long time;
-    void (*update)(struct object*, void*, unsigned int);
+    float time;
+    void (*update)(struct object*, void*, float);
     char dead;
     char on_ground;
 } player_t;
@@ -88,7 +88,7 @@ typedef struct {
     player_t *player;
 } infos_t;
 
-typedef void (*update_fct_t)(object_t*, void*, unsigned int);
+typedef void (*update_fct_t)(object_t*, void*, float);
 
 infos_t *create_infos(void);
 void *destroy_infos(infos_t *infos);
@@ -97,7 +97,7 @@ sfTexture *get_texture(infos_t *infos, enum texture id);
 void destroy_textures(list_t *textures);
 list_t *load_textures(void);
 
-void move_backgrounds(infos_t *infos, unsigned int pos);
+void move_backgrounds(infos_t *infos, float pos);
 void destroy_backgrounds(list_t *backgrounds);
 list_t *create_backgrounds(infos_t *infos);
 
@@ -114,12 +114,12 @@ char check_collision(object_t* p_obj, object_t *obj);
 
 int load_level(char *filepath, infos_t *infos);
 
-void update_block(object_t *obj, void *objs, unsigned int);
-void update_fire(object_t *obj, void *infos, unsigned int elapsed);
-void reset_blocks(list_t *objs, unsigned int pos);
+void update_block(object_t *obj, void *objs, float);
+void update_fire(object_t *obj, void *infos, float);
+void reset_blocks(list_t *objs, float pos);
 
 void analyse_events(sfRenderWindow *window,
-infos_t *infos, unsigned int elapsed);
+infos_t *infos, float elapsed);
 
 score_t *score_display_create(void);
 void score_display_destroy(score_t *score);

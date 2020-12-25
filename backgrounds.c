@@ -11,7 +11,7 @@
 #include "my_list.h"
 #include "my_runner.h"
 
-void move_backgrounds(infos_t *infos, unsigned int pos)
+void move_backgrounds(infos_t *infos, float pos)
 {
     list_t *backgrounds = infos->backgrounds;
     int offset;

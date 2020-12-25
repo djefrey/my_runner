@@ -11,26 +11,26 @@
 #include "my_runner.h"
 
 static void manage_mouse(sfMouseButtonEvent mouseEv,
-infos_t *infos,unsigned int elapsed)
+infos_t *infos, float elapsed)
 {
 
 }
 
 static void manage_keyboard(sfKeyEvent keyEv,
-infos_t *infos, unsigned int elapsed)
+infos_t *infos, float elapsed)
 {
     player_t *player = infos->player;
 
     if (keyEv.type == sfEvtKeyPressed) {
         if (keyEv.code == sfKeySpace && player->on_ground) {
-            player->acc.y -= 20;
+            player->acc.y -= 20 * sqrt(elapsed);
             player->on_ground = 0;
         }
     }
 }
 
 void analyse_events(sfRenderWindow *window,
-infos_t *infos, unsigned int elapsed)
+infos_t *infos, float elapsed)
 {
     sfEvent event;
 
