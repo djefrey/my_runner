@@ -73,25 +73,24 @@ typedef struct player {
 } player_t;
 
 typedef struct {
+    int score;
     int score_display;
-    framebuffer_t *fb;
-    sfTexture *texture;
-    sfSprite *sprite;
+    sfText *text;
+    sfFont *font;
 } score_t;
 
 typedef struct {
-    int score;
     list_t *textures;
     list_t *backgrounds;
     list_t *objects;
-    score_t *score_display;
     player_t *player;
+    score_t *score;
 } infos_t;
 
 typedef void (*update_fct_t)(object_t*, void*, float);
 
 infos_t *create_infos(void);
-void *destroy_infos(infos_t *infos);
+void destroy_infos(infos_t *infos);
 
 sfTexture *get_texture(infos_t *infos, enum texture id);
 void destroy_textures(list_t *textures);
@@ -121,8 +120,8 @@ void reset_blocks(list_t *objs, float pos);
 void analyse_events(sfRenderWindow *window,
 infos_t *infos, float elapsed);
 
-score_t *score_display_create(void);
-void score_display_destroy(score_t *score);
-void set_score_display(score_t *score, int nbr);
+score_t *create_score(void);
+void destroy_score(score_t *score);
+void set_score(score_t *score);
 
 #endif /* !MY_RUNNER_H_ */

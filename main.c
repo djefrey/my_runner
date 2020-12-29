@@ -6,11 +6,14 @@
 */
 
 #include <SFML/Graphics.h>
+#include "my.h"
 #include "my_runner.h"
 
-static sfRenderWindow *create_window(void)
+static sfRenderWindow *create_window(int ac, char *av[])
 {
-    sfVideoMode mode = {WINDOW_WIDTH, WINDOW_HEIGHT, 32};
+    int width = ac == 4 ? my_getnbr(av[2]) : WINDOW_WIDTH;
+    int height = ac == 4 ? my_getnbr(av[3]) : WINDOW_HEIGHT;
+    sfVideoMode mode = {width, height, 32};
     sfRenderWindow *window =
     sfRenderWindow_create(mode, WINDOW_TITLE, sfDefaultStyle, NULL);
     sfView *view = sfView_create();
@@ -20,15 +23,19 @@ static sfRenderWindow *create_window(void)
     sfView_setSize(view, view_size);
     sfView_setCenter(view, view_center);
     sfRenderWindow_setView(window, view);
-    sfRenderWindow_setFramerateLimit(window, 30);
+    sfRenderWindow_setFramerateLimit(window, 60);
     return (window);
 }
 
 int main(int ac, char *av[])
 {
-    sfRenderWindow *window = create_window();
-    int ret = game(window, "./bonus/level.txt");
+    sfRenderWindow *window = create_window(ac, av);
+    char *level;
 
-    sfRenderWindow_destroy(window);
-    return (ret);
+    if (ac == 1) {
+        sfRenderWindow_destroy(window);
+        return (84);
+    }
+    level = av[1];
+    return (game(window, level));
 }

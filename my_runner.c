@@ -26,10 +26,10 @@ static void update(infos_t *infos, float elapsed, float *pos)
     if (infos->player->dead) {
         reset_blocks(infos->objects, *pos);
         reset_player(infos->player);
-        infos->score = 0;
+        infos->score->score = 0;
         *pos = 0;
     }
-    set_score_display(infos->score_display, infos->score);
+    set_score(infos->score);
 }
 
 static void draw(sfRenderWindow *window, infos_t *infos)
@@ -49,7 +49,7 @@ static void draw(sfRenderWindow *window, infos_t *infos)
             sfRenderWindow_drawSprite(window, obj->sprite, NULL);
         list = list->next;
     }
-    sfRenderWindow_drawSprite(window, infos->score_display->sprite, NULL);
+    sfRenderWindow_drawText(window, infos->score->text, NULL);
     sfRenderWindow_display(window);
 }
 

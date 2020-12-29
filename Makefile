@@ -16,8 +16,7 @@ SRC		=	main.c			\
 			blocks.c		\
 			level.c			\
 			physics.c		\
-			framebuffer.c	\
-			score_display.c
+			score.c
 LIB_DIR	=	./mylib
 INC_DIR	=	./include
 CFLAGS	+=	-W -Wall -I$(INC_DIR)

@@ -10,14 +10,13 @@
 #include "my_list.h"
 #include "my_runner.h"
 
-void *destroy_infos(infos_t *infos)
+void destroy_infos(infos_t *infos)
 {
     destroy_textures(infos->textures);
     destroy_backgrounds(infos->backgrounds);
     destroy_objects(infos->objects);
-    score_display_destroy(infos->score_display);
+    destroy_score(infos->score);
     free(infos);
-    return (NULL);
 }
 
 infos_t *create_infos(void)
@@ -31,7 +30,9 @@ infos_t *create_infos(void)
     if (!(infos->textures = load_textures()) ||
     !(infos->backgrounds = create_backgrounds(infos)) ||
     !(infos->player = create_player(infos)) ||
-    !(infos->score_display = score_display_create()))
-        return (destroy_infos(infos));
+    !(infos->score = create_score())) {
+        destroy_infos(infos);
+        return (NULL);
+    }
     return (infos);
 }

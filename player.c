@@ -26,7 +26,7 @@ static void detect_collision(player_t *player, object_t *block, infos_t *infos)
         case 1:
             if (block->type == COIN) {
                 block->hide = 1;
-                infos->score += COIN_SCORE;
+                infos->score->score += COIN_SCORE;
             } else
                 player->dead = 1;
             break;
