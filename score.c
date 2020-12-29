@@ -29,6 +29,7 @@ void set_score(score_t *score)
 void destroy_score(score_t *score)
 {
     sfText_destroy(score->text);
+    sfFont_destroy(score->font);
     free(score);
 }
 
