@@ -31,6 +31,12 @@
 
 #define COIN_SCORE 150
 
+#define LEVEL_END 1920
+
+enum game_status {GAME,
+                END_ANIM,
+                VICTORY};
+
 enum texture {PLAYER_TEXT,
             STONE_TEXT,
             GRASS_TEXT,
@@ -80,6 +86,8 @@ typedef struct {
 } score_t;
 
 typedef struct {
+    enum game_status status;
+    int level_size;
     list_t *textures;
     list_t *backgrounds;
     list_t *objects;
@@ -112,6 +120,9 @@ void reset_player(player_t *obj);
 char check_collision(object_t* p_obj, object_t *obj);
 
 int load_level(char *filepath, infos_t *infos);
+
+void game_update(infos_t *infos, float elapsed, float *pos);
+void end_update(infos_t *infos, float elapsed);
 
 void update_block(object_t *obj, void *objs, float);
 void update_emerald(object_t *obj, void *infos, float);

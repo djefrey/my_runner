@@ -7,6 +7,7 @@
 
 SRC		=	main.c			\
 			my_runner.c		\
+			game.c			\
 			events.c		\
 			setup.c			\
 			backgrounds.c	\

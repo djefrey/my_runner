@@ -13,23 +13,10 @@
 
 static void update(infos_t *infos, float elapsed, float *pos)
 {
-    list_t *list = infos->objects;
-    object_t *obj = NULL;
-
-    *pos += SCROLLING_SPEED * elapsed;
-    move_backgrounds(infos, *pos);
-    while (list) {
-        obj = (object_t*) list->data;
-        (*(obj->update))(obj, infos, elapsed);
-        list = list->next;
-    }
-    if (infos->player->dead) {
-        reset_blocks(infos->objects, *pos);
-        reset_player(infos->player);
-        infos->score->score = 0;
-        *pos = 0;
-    }
-    set_score(infos->score);
+    if (infos->status == GAME)
+        game_update(infos, elapsed, pos);
+    if (infos->status == END_ANIM)
+        end_update(infos, elapsed);
 }
 
 static void draw(sfRenderWindow *window, infos_t *infos)
@@ -71,9 +58,12 @@ static void loop(sfRenderWindow *window, infos_t *infos)
 int game(sfRenderWindow *window, char *level)
 {
     infos_t *infos = create_infos();
+    int level_size;
 
-    if (!infos || load_level(level, infos))
+    if (!infos || (level_size = load_level(level, infos)) == -1)
         return (84);
+    infos->status = GAME;
+    infos->level_size = level_size - LEVEL_END;
     loop(window, infos);
     destroy_infos(infos);
     return (0);
