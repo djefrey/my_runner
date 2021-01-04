@@ -34,6 +34,7 @@
 #define LEVEL_END 1920
 
 enum game_status {GAME,
+                PAUSE,
                 END_ANIM,
                 VICTORY};
 

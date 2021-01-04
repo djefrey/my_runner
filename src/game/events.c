@@ -10,6 +10,18 @@
 #include "my_list.h"
 #include "my_runner.h"
 
+static void set_pause(infos_t *infos)
+{
+    if (infos->status == GAME) {
+        infos->status = PAUSE;
+        (infos->fade->color).a = 127;
+    } else {
+        infos->status = GAME;
+        (infos->fade->color).a = 0;
+    }
+    update_fade_sprite(infos->fade);
+}
+
 static void manage_mouse(sfMouseButtonEvent mouseEv,
 infos_t *infos, float elapsed)
 {
@@ -22,7 +34,10 @@ infos_t *infos, float elapsed)
     player_t *player = infos->player;
 
     if (keyEv.type == sfEvtKeyPressed) {
-        if (keyEv.code == sfKeySpace && player->on_ground) {
+        if (keyEv.code == sfKeyEscape)
+            set_pause(infos);
+        if (keyEv.code == sfKeySpace && player->on_ground
+        && infos->status == GAME) {
             player->acc.y -= 20 * sqrt(elapsed);
             player->on_ground = 0;
         }

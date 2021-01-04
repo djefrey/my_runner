@@ -13,10 +13,16 @@
 
 static void update(infos_t *infos, float elapsed, float *pos)
 {
-    if (infos->status == GAME)
-        game_update(infos, elapsed, pos);
-    if (infos->status == END_ANIM)
-        end_update(infos, elapsed);
+    switch (infos->status) {
+        case GAME:
+            game_update(infos, elapsed, pos);
+            break;
+        case END_ANIM:
+            end_update(infos, elapsed);
+            break;
+        default:
+            break;
+    }
 }
 
 static void draw(sfRenderWindow *window, infos_t *infos)
@@ -24,7 +30,6 @@ static void draw(sfRenderWindow *window, infos_t *infos)
     sfRenderWindow_clear(window, sfBlack);
 
     if (infos->status == VICTORY) {
-        printf("slt\n");
     } else if (infos->status == END_ANIM)
         end_draw(window, infos);
     else

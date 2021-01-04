@@ -19,7 +19,7 @@ void end_update(infos_t *infos, float elapsed)
     increase_fade_alpha(infos->fade, (int) ceil(elapsed));
     update_fade_sprite(infos->fade);
     set_position(player, 960, 540);
-    set_rotation(player, player->rot + 10);
+    set_rotation(player, player->rot + 5 * elapsed);
 }
 
 void game_update(infos_t *infos, float elapsed, float *pos)
@@ -75,4 +75,5 @@ void game_draw(sfRenderWindow *window, infos_t *infos)
             sfRenderWindow_drawSprite(window, obj->sprite, NULL);
     }
     sfRenderWindow_drawText(window, infos->score->text, NULL);
+    sfRenderWindow_drawSprite(window, infos->fade->sprite, NULL);
 }

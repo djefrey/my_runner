@@ -52,8 +52,7 @@ fade_t *create_fade(sfColor color)
 
     if (fade == NULL)
         return (NULL);
-    fb = create_framebuffer(WINDOW_WIDTH, WINDOW_HEIGHT);
-    if (fb == NULL) {
+    if ((fb = create_framebuffer(WINDOW_WIDTH, WINDOW_HEIGHT)) == NULL) {
         free(fade);
         sfTexture_destroy(texture);
         sfSprite_destroy(sprite);
@@ -64,5 +63,6 @@ fade_t *create_fade(sfColor color)
     fade->fb = fb;
     fade->texture = texture;
     fade->sprite = sprite;
+    update_fade_sprite(fade);
     return (fade);
 }
