@@ -30,6 +30,7 @@ static void draw(sfRenderWindow *window, infos_t *infos)
     sfRenderWindow_clear(window, sfBlack);
 
     if (infos->status == VICTORY) {
+        victory_draw(window, infos);
     } else if (infos->status == END_ANIM)
         end_draw(window, infos);
     else

@@ -48,6 +48,7 @@ texts_t *create_texts(void)
     sfText_setColor(title, sfWhite);
     sfText_setFont(infos, font);
     sfText_setColor(infos, sfWhite);
+    sfText_setCharacterSize(infos, 20);
     texts->title = title;
     texts->infos = infos;
     texts->font = font;

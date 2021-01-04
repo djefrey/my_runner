@@ -11,17 +11,6 @@
 #include "my_list.h"
 #include "my_runner.h"
 
-void end_update(infos_t *infos, float elapsed)
-{
-    object_t *player = infos->player;
-    sfColor color = sfRed;
-
-    increase_fade_alpha(infos->fade, (int) ceil(elapsed));
-    update_fade_sprite(infos->fade);
-    set_position(player, 960, 540);
-    set_rotation(player, player->rot + 5 * elapsed);
-}
-
 void game_update(infos_t *infos, float elapsed, float *pos)
 {
     object_t *obj = NULL;
@@ -45,39 +34,28 @@ void game_update(infos_t *infos, float elapsed, float *pos)
     set_score(infos->score);
 }
 
-void end_draw(sfRenderWindow *window, infos_t *infos)
+static void set_victory_status(infos_t *infos, float elapsed)
 {
-    list_t *list = infos->backgrounds;
-    object_t *obj;
+    float rot = infos->player->rot;
 
-    for (list_t *list = infos->backgrounds; list; list = list->next)
-        sfRenderWindow_drawSprite(window, (sfSprite*) list->data, NULL);
-    for (list_t *list = infos->objects; list; list = list->next) {
-        obj = ((object_t*) list->data);
-        if (obj->type == PLAYER)
-            continue;
-        if (!obj->hide && obj->pos.x < WINDOW_WIDTH + BLOCK_SIZE)
-            sfRenderWindow_drawSprite(window, obj->sprite, NULL);
+    if (infos->fade->alpha == 255) {
+        printf("%f\n", rot);
+        if (rot <= (3 * elapsed) || rot >= (360 - 3 * elapsed)) {
+            set_rotation(infos->player, 0);
+            set_texts(infos->texts, "VICTOIRE", "Y'aura ton score ici");
+            infos->status = VICTORY;
+        }
     }
-    sfRenderWindow_drawSprite(window, infos->fade->sprite, NULL);
-    sfRenderWindow_drawSprite(window, infos->player->sprite, NULL);
 }
 
-void game_draw(sfRenderWindow *window, infos_t *infos)
+void end_update(infos_t *infos, float elapsed)
 {
-    object_t *obj;
+    object_t *player = infos->player;
+    sfColor color = sfRed;
 
-    for (list_t *list = infos->backgrounds; list; list = list->next)
-        sfRenderWindow_drawSprite(window, (sfSprite*) list->data, NULL);
-    for (list_t *list = infos->objects; list; list = list->next) {
-        obj = ((object_t*) list->data);
-        if (!obj->hide && obj->pos.x < WINDOW_WIDTH + BLOCK_SIZE)
-            sfRenderWindow_drawSprite(window, obj->sprite, NULL);
-    }
-    sfRenderWindow_drawText(window, infos->score->text, NULL);
-    if (infos->status == PAUSE) {
-        sfRenderWindow_drawSprite(window, infos->fade->sprite, NULL);
-        sfRenderWindow_drawText(window, infos->texts->title, NULL);
-        sfRenderWindow_drawText(window, infos->texts->infos, NULL);
-    }
+    increase_fade_alpha(infos->fade, (int) ceil(elapsed));
+    update_fade_sprite(infos->fade);
+    set_position(player, 930, 510);
+    set_rotation(player, player->rot + 5 * elapsed);
+    set_victory_status(infos, elapsed);
 }

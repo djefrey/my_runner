@@ -139,8 +139,10 @@ int load_level(char *filepath, infos_t *infos);
 
 void game_update(infos_t *infos, float elapsed, float *pos);
 void end_update(infos_t *infos, float elapsed);
+
 void end_draw(sfRenderWindow *window, infos_t *infos);
 void update_draw(sfRenderWindow *window, infos_t *infos);
+void victory_draw(sfRenderWindow *window, infos_t *infos);
 
 void update_block(object_t *obj, void *objs, float);
 void update_emerald(object_t *obj, void *infos, float);
