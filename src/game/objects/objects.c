@@ -20,6 +20,8 @@ void set_position(object_t *object, int x, int y)
 void set_rotation(object_t *object, float rot)
 {
     object->rot = rot;
+    while (object->rot >= 360)
+        object->rot -= 360;
     sfSprite_setRotation(object->sprite, rot);
 }
 
