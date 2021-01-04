@@ -33,6 +33,8 @@ infos_t *infos, float elapsed)
 {
     player_t *player = infos->player;
 
+    if (infos->status > PAUSE)
+        return;
     if (keyEv.type == sfEvtKeyPressed) {
         if (keyEv.code == sfKeyEscape)
             set_pause(infos);
