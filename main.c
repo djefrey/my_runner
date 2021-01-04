@@ -27,6 +27,17 @@ static sfRenderWindow *create_window(int ac, char *av[])
     return (window);
 }
 
+static void print_help()
+{
+    my_putstr("MY_RUNNER\n");
+    my_putstr("DESCRIPTION\n");
+    my_putstr("     Jump at the right moment to dodge obstacles\n");
+    my_putstr("\nCONTROLS\n");
+    my_putstr("     space: jump\n");
+    my_putstr("\nARGUMENTS\n");
+    my_putstr("     ./my_runner level_file [width] [height]\n");
+}
+
 int main(int ac, char *av[])
 {
     sfRenderWindow *window = create_window(ac, av);
@@ -35,6 +46,10 @@ int main(int ac, char *av[])
     if (ac == 1) {
         sfRenderWindow_destroy(window);
         return (84);
+    }
+    if (my_strcmp(av[1], "-h") == 0) {
+        print_help();
+        return (0);
     }
     level = av[1];
     return (game(window, level));
