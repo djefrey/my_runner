@@ -87,7 +87,7 @@ typedef struct {
 } score_t;
 
 typedef struct {
-    sfColor color;
+    unsigned char alpha;
     framebuffer_t *fb;
     sfTexture *texture;
     sfSprite *sprite;

@@ -14,10 +14,10 @@ static void set_pause(infos_t *infos)
 {
     if (infos->status == GAME) {
         infos->status = PAUSE;
-        (infos->fade->color).a = 127;
+        infos->fade->alpha = 127;
     } else {
         infos->status = GAME;
-        (infos->fade->color).a = 0;
+        infos->fade->alpha = 0;
     }
     update_fade_sprite(infos->fade);
 }

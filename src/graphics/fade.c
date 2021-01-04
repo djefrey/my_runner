@@ -11,26 +11,24 @@
 
 void increase_fade_alpha(fade_t *fade, int inc)
 {
-    if (fade->color.a + inc >= 255)
-        fade->color.a = 255;
+    if (fade->alpha + inc >= 255)
+        fade->alpha = 255;
     else
-        fade->color.a += inc;
+        fade->alpha += inc;
 }
 
 void decrease_fade_alpha(fade_t *fade, int dec)
 {
-    if (fade->color.a - dec <= 0)
-        fade->color.a = 0;
+    if (fade->alpha - dec <= 0)
+        fade->alpha = 0;
     else
-        fade->color.a -= dec;
+        fade->alpha -= dec;
 }
 
 void update_fade_sprite(fade_t *fade)
 {
-    for (int y = 0; y < WINDOW_HEIGHT; y++) {
-        for (int x = 0; x < WINDOW_WIDTH; x++)
-            my_put_pixel(fade->fb, x, y, fade->color);
-    }
+    for (int i = 0; i < WINDOW_WIDTH * WINDOW_HEIGHT; i++)
+        fade->fb->pixels[i * 4 + 3] = fade->alpha;
     sfTexture_updateFromPixels(fade->texture, fade->fb->pixels,
     WINDOW_WIDTH, WINDOW_HEIGHT, 0, 0);
 }
@@ -59,7 +57,7 @@ fade_t *create_fade(sfColor color)
         return (NULL);
     }
     sfSprite_setTexture(sprite, texture, 0);
-    fade->color = color;
+    fade->alpha = color.a;
     fade->fb = fb;
     fade->texture = texture;
     fade->sprite = sprite;
