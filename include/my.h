@@ -43,6 +43,7 @@ int my_strcmp(char const *s1, char const *s2);
 char *my_strcpy(char *dest, char const *src);
 char *my_strdup(char const *src);
 int my_strlen(char const *str);
+int my_get_biggest_line(char const *str);
 char *my_strlowcase(char *str);
 char *my_strncat(char *dest, char const *src, int nb);
 int my_strncmp(char const *s1, char const *s2, int n);
