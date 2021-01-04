@@ -19,6 +19,7 @@ SRC		=	src/main.c					\
 			src/graphics/backgrounds.c	\
 			src/graphics/framebuffer.c	\
 			src/graphics/fade.c			\
+			src/graphics/texts.c		\
 			src/graphics/textures.c
 LIB_DIR	=	./mylib
 INC_DIR	=	./include

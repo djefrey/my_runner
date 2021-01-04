@@ -94,6 +94,12 @@ typedef struct {
 } fade_t;
 
 typedef struct {
+    sfText *title;
+    sfText *infos;
+    sfFont *font;
+} texts_t;
+
+typedef struct {
     enum game_status status;
     int level_size;
     list_t *textures;
@@ -102,6 +108,7 @@ typedef struct {
     player_t *player;
     score_t *score;
     fade_t *fade;
+    texts_t *texts;
 } infos_t;
 
 typedef void (*update_fct_t)(object_t*, void*, float);
@@ -152,5 +159,9 @@ void destroy_fade(fade_t *fade);
 void update_fade_sprite(fade_t *fade);
 void increase_fade_alpha(fade_t *fade, int inc);
 void decrease_fade_alpha(fade_t *fade, int inc);
+
+texts_t *create_texts(void);
+void destroy_texts(texts_t *texts);
+void set_texts(texts_t *texts, char *title, char *infos);
 
 #endif /* !MY_RUNNER_H_ */

@@ -75,5 +75,9 @@ void game_draw(sfRenderWindow *window, infos_t *infos)
             sfRenderWindow_drawSprite(window, obj->sprite, NULL);
     }
     sfRenderWindow_drawText(window, infos->score->text, NULL);
-    sfRenderWindow_drawSprite(window, infos->fade->sprite, NULL);
+    if (infos->status == PAUSE) {
+        sfRenderWindow_drawSprite(window, infos->fade->sprite, NULL);
+        sfRenderWindow_drawText(window, infos->texts->title, NULL);
+        sfRenderWindow_drawText(window, infos->texts->infos, NULL);
+    }
 }

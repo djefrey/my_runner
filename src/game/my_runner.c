@@ -61,6 +61,7 @@ int game(sfRenderWindow *window, char *level)
         return (84);
     infos->status = GAME;
     infos->level_size = level_size - LEVEL_END;
+    set_texts(infos->texts, "PAUSE", "");
     loop(window, infos);
     destroy_infos(infos);
     return (0);
