@@ -86,6 +86,13 @@ typedef struct {
 } score_t;
 
 typedef struct {
+    sfColor color;
+    framebuffer_t *fb;
+    sfTexture *texture;
+    sfSprite *sprite;
+} fade_t;
+
+typedef struct {
     enum game_status status;
     int level_size;
     list_t *textures;
@@ -93,6 +100,7 @@ typedef struct {
     list_t *objects;
     player_t *player;
     score_t *score;
+    fade_t *fade;
 } infos_t;
 
 typedef void (*update_fct_t)(object_t*, void*, float);
@@ -123,6 +131,8 @@ int load_level(char *filepath, infos_t *infos);
 
 void game_update(infos_t *infos, float elapsed, float *pos);
 void end_update(infos_t *infos, float elapsed);
+void end_draw(sfRenderWindow *window, infos_t *infos);
+void update_draw(sfRenderWindow *window, infos_t *infos);
 
 void update_block(object_t *obj, void *objs, float);
 void update_emerald(object_t *obj, void *infos, float);
@@ -135,5 +145,11 @@ infos_t *infos, float elapsed);
 score_t *create_score(void);
 void destroy_score(score_t *score);
 void set_score(score_t *score);
+
+fade_t *create_fade(sfColor color);
+void destroy_fade(fade_t *fade);
+void update_fade_sprite(fade_t *fade);
+void increase_fade_alpha(fade_t *fade, int inc);
+void decrease_fade_alpha(fade_t *fade, int inc);
 
 #endif /* !MY_RUNNER_H_ */

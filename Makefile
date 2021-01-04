@@ -11,6 +11,8 @@ SRC		=	main.c			\
 			events.c		\
 			setup.c			\
 			backgrounds.c	\
+			framebuffer.c	\
+			fade.c			\
 			objects.c		\
 			textures.c		\
 			player.c		\

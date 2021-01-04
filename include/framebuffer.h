@@ -17,10 +17,10 @@ typedef struct {
     sfUint8 *pixels;
 } framebuffer_t;
 
-framebuffer_t *framebuffer_create(unsigned int width, unsigned int height);
-void framebuffer_destroy(framebuffer_t *buffer);
+framebuffer_t *create_framebuffer(unsigned int width, unsigned int height);
+void destroy_framebuffer(framebuffer_t *buffer);
 void my_put_pixel(framebuffer_t *buffer, unsigned int x, unsigned int y,
 sfColor color);
-void framebuffer_clear(framebuffer_t *framebuffer);
+void clear_framebuffer(framebuffer_t *buffer);
 
 #endif /* !FRAMEBUFFER_H_ */

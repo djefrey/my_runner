@@ -21,22 +21,14 @@ static void update(infos_t *infos, float elapsed, float *pos)
 
 static void draw(sfRenderWindow *window, infos_t *infos)
 {
-    list_t *list = infos->backgrounds;
-    object_t *obj;
-
     sfRenderWindow_clear(window, sfBlack);
-    while (list) {
-        sfRenderWindow_drawSprite(window, (sfSprite*) list->data, NULL);
-        list = list->next;
-    }
-    list = infos->objects;
-    while (list) {
-        obj = ((object_t*) list->data);
-        if (!obj->hide && obj->pos.x < WINDOW_WIDTH + BLOCK_SIZE)
-            sfRenderWindow_drawSprite(window, obj->sprite, NULL);
-        list = list->next;
-    }
-    sfRenderWindow_drawText(window, infos->score->text, NULL);
+
+    if (infos->status == VICTORY) {
+        printf("slt\n");
+    } else if (infos->status == END_ANIM)
+        end_draw(window, infos);
+    else
+        game_draw(window, infos);
     sfRenderWindow_display(window);
 }
 
