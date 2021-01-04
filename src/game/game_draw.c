@@ -32,7 +32,6 @@ void game_draw(sfRenderWindow *window, infos_t *infos)
 
 void end_draw(sfRenderWindow *window, infos_t *infos)
 {
-    list_t *list = infos->backgrounds;
     object_t *obj;
 
     for (list_t *list = infos->backgrounds; list; list = list->next)

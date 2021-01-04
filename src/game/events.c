@@ -7,6 +7,7 @@
 
 #include <SFML/Window.h>
 #include <SFML/Graphics.h>
+#include <math.h>
 #include "my_list.h"
 #include "my_runner.h"
 

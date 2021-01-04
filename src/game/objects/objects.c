@@ -25,7 +25,7 @@ void set_rotation(object_t *object, float rot)
     sfSprite_setRotation(object->sprite, rot);
 }
 
-void destroy_object(object_t *object, list_t *list)
+void destroy_object(object_t *object, list_t **list)
 {
     if (list)
         my_delete_node(list, object);

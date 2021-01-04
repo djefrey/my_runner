@@ -6,6 +6,7 @@
 */
 
 #include <SFML/Graphics.h>
+#include "my.h"
 #include "my_runner.h"
 
 static void set_text(sfText *text, char *str)

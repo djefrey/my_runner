@@ -14,7 +14,7 @@
 
 static void read_line(char *line, int len, int y, infos_t *infos)
 {
-    char id;
+    int id;
     object_t *obj;
 
     for (int i = 0; i < len; i++, line += 1) {

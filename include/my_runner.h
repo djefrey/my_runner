@@ -113,6 +113,8 @@ typedef struct {
 
 typedef void (*update_fct_t)(object_t*, void*, float);
 
+int game(sfRenderWindow *window, char *level);
+
 infos_t *create_infos(void);
 void destroy_infos(infos_t *infos);
 
@@ -126,7 +128,7 @@ list_t *create_backgrounds(infos_t *infos);
 
 void set_position(object_t *object, int x, int y);
 void set_rotation(object_t *object, float rot);
-void destroy_object(object_t *object, list_t *list);
+void destroy_object(object_t *object, list_t **list);
 void destroy_objects(list_t *list);
 object_t *create_object(infos_t *infos, enum object_type type,
 enum texture text_id, update_fct_t up_fct);
@@ -140,8 +142,8 @@ int load_level(char *filepath, infos_t *infos);
 void game_update(infos_t *infos, float elapsed, float *pos);
 void end_update(infos_t *infos, float elapsed);
 
+void game_draw(sfRenderWindow *window, infos_t *infos);
 void end_draw(sfRenderWindow *window, infos_t *infos);
-void update_draw(sfRenderWindow *window, infos_t *infos);
 void victory_draw(sfRenderWindow *window, infos_t *infos);
 
 void update_block(object_t *obj, void *objs, float);

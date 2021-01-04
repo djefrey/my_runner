@@ -39,9 +39,8 @@ static void set_victory_status(infos_t *infos, float elapsed)
     float rot = infos->player->rot;
 
     if (infos->fade->alpha == 255) {
-        printf("%f\n", rot);
         if (rot <= (3 * elapsed) || rot >= (360 - 3 * elapsed)) {
-            set_rotation(infos->player, 0);
+            set_rotation((object_t*) infos->player, 0);
             set_texts(infos->texts, "VICTOIRE", "Y'aura ton score ici");
             infos->status = VICTORY;
         }
@@ -50,8 +49,7 @@ static void set_victory_status(infos_t *infos, float elapsed)
 
 void end_update(infos_t *infos, float elapsed)
 {
-    object_t *player = infos->player;
-    sfColor color = sfRed;
+    object_t *player = (object_t*) infos->player;
 
     increase_fade_alpha(infos->fade, (int) ceil(elapsed));
     update_fade_sprite(infos->fade);

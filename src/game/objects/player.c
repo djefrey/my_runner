@@ -15,12 +15,12 @@ static void set_player_on_ground(player_t *player, int ground_y)
     player->pos.y = ground_y - 64;
     player->on_ground = 1;
     if ((int) round(player->rot) % 90 != 0)
-        set_rotation(player, round(player->rot / 90.0) * 90);
+        set_rotation((object_t*) player, round(player->rot / 90.0) * 90);
 }
 
 static void detect_collision(player_t *player, object_t *block, infos_t *infos)
 {
-    char result = check_collision(player, block);
+    char result = check_collision((object_t*) player, block);
 
     switch (result) {
         case 1:
