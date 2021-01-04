@@ -114,6 +114,7 @@ char check_collision(object_t* p_obj, object_t *obj);
 int load_level(char *filepath, infos_t *infos);
 
 void update_block(object_t *obj, void *objs, float);
+void update_emerald(object_t *obj, void *infos, float);
 void update_fire(object_t *obj, void *infos, float);
 void reset_blocks(list_t *objs, float pos);
 

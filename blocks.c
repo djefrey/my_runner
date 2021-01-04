@@ -15,6 +15,23 @@ void update_block(object_t *obj, void *infos, float elapsed)
         obj->hide = 1;
 }
 
+void update_emerald(object_t *obj, void *infos, float elapsed)
+{
+    int x = sfSprite_getTextureRect(obj->sprite).left;
+
+    update_block(obj, infos, elapsed);
+    obj->time += elapsed;
+    if (obj->time >= 60) {
+        sfSprite_setTextureRect(obj->sprite, (sfIntRect) {0, 0, 64, 64});
+        obj->time = 0;
+    } else if (obj->time >= 40) {
+        if (obj->time >= 50 && x == 64) {
+            sfSprite_setTextureRect(obj->sprite, (sfIntRect) {128, 0, 64, 64});
+        } else if (x == 0)
+            sfSprite_setTextureRect(obj->sprite, (sfIntRect) {64, 0, 64, 64});
+    }
+}
+
 void update_fire(object_t *obj, void *infos, float elapsed)
 {
     int x;

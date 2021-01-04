@@ -26,6 +26,6 @@ const update_fct_t UPDATE_LIST[] = {&update_block,
                                     &update_block,
                                     &update_block,
                                     &update_fire,
-                                    &update_block};
+                                    &update_emerald};
 
 #endif /* !LEVEL_H_ */
