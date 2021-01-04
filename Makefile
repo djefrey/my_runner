@@ -5,21 +5,21 @@
 ## Makefile
 ##
 
-SRC		=	main.c			\
-			my_runner.c		\
-			game.c			\
-			events.c		\
-			setup.c			\
-			backgrounds.c	\
-			framebuffer.c	\
-			fade.c			\
-			objects.c		\
-			textures.c		\
-			player.c		\
-			blocks.c		\
-			level.c			\
-			physics.c		\
-			score.c
+SRC		=	src/main.c					\
+			src/game/my_runner.c		\
+			src/game/game_update.c		\
+			src/game/events.c			\
+			src/game/setup.c			\
+			src/game/level.c			\
+			src/game/physics.c			\
+			src/game/score.c			\
+			src/game/objects/objects.c	\
+			src/game/objects/player.c	\
+			src/game/objects/blocks.c	\
+			src/graphics/backgrounds.c	\
+			src/graphics/framebuffer.c	\
+			src/graphics/fade.c			\
+			src/graphics/textures.c
 LIB_DIR	=	./mylib
 INC_DIR	=	./include
 CFLAGS	+=	-W -Wall -I$(INC_DIR)
