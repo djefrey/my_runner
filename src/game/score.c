@@ -28,9 +28,11 @@ void set_score(score_t *score)
 
 void destroy_score(score_t *score)
 {
-    sfText_destroy(score->text);
-    sfFont_destroy(score->font);
-    free(score);
+    if (score != NULL) {
+        sfText_destroy(score->text);
+        sfFont_destroy(score->font);
+        free(score);
+    }
 }
 
 score_t *create_score(void)

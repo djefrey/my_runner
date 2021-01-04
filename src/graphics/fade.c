@@ -35,10 +35,12 @@ void update_fade_sprite(fade_t *fade)
 
 void destroy_fade(fade_t *fade)
 {
-    sfSprite_destroy(fade->sprite);
-    sfTexture_destroy(fade->texture);
-    destroy_framebuffer(fade->fb);
-    free(fade);
+    if (fade != NULL) {
+        sfSprite_destroy(fade->sprite);
+        sfTexture_destroy(fade->texture);
+        destroy_framebuffer(fade->fb);
+        free(fade);
+    }
 }
 
 fade_t *create_fade(sfColor color)
