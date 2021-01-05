@@ -64,6 +64,7 @@ int game(sfRenderWindow *window, char *level, int sprite_id)
     set_texts(infos->texts, "PAUSE", "");
     sfSprite_setTextureRect(infos->player->sprite,
     (sfIntRect) {64 * sprite_id, 0, 64, 64});
+    sfMusic_play(infos->audio->music);
     loop(window, infos);
     destroy_infos(infos);
     return (0);

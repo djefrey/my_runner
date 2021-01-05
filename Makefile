@@ -16,6 +16,7 @@ SRC		=	src/main.c					\
 			src/game/level.c			\
 			src/game/physics.c			\
 			src/game/score.c			\
+			src/game/audio.c			\
 			src/game/objects/objects.c	\
 			src/game/objects/player.c	\
 			src/game/objects/blocks.c	\

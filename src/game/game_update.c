@@ -30,6 +30,7 @@ void game_update(infos_t *infos, float elapsed, float *pos)
         reset_player(infos->player);
         infos->score->score = 0;
         *pos = 0;
+        play_sound(infos->audio, DAMAGE_SOUND);
     }
     set_score(infos->score);
 }

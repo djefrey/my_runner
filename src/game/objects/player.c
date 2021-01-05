@@ -27,6 +27,7 @@ static void detect_collision(player_t *player, object_t *block, infos_t *infos)
             if (block->type == COIN) {
                 block->hide = 1;
                 infos->score->score += COIN_SCORE;
+                play_sound(infos->audio, COIN_SOUND);
             } else
                 player->dead = 1;
             break;

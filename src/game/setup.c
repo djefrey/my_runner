@@ -18,6 +18,7 @@ void destroy_infos(infos_t *infos)
     destroy_score(infos->score);
     destroy_fade(infos->fade);
     destroy_texts(infos->texts);
+    destroy_audio(infos->audio);
     free(infos);
 }
 
@@ -34,7 +35,8 @@ infos_t *create_infos(void)
     !(infos->player = create_player(infos)) ||
     !(infos->score = create_score()) ||
     !(infos->fade = create_fade(sfColor_fromRGBA(0, 0, 0, 0))) ||
-    !(infos->texts = create_texts())) {
+    !(infos->texts = create_texts()) ||
+    !(infos->audio = create_audio())) {
         destroy_infos(infos);
         return (NULL);
     }

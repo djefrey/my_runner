@@ -16,6 +16,7 @@
 #include "fade.h"
 #include "score.h"
 #include "texts.h"
+#include "audio.h"
 
 #define WINDOW_WIDTH 1920
 #define WINDOW_HEIGHT 1080
@@ -53,6 +54,7 @@ typedef struct {
     score_t *score;
     fade_t *fade;
     texts_t *texts;
+    audio_t *audio;
 } infos_t;
 
 typedef void (*update_fct_t)(object_t*, void*, float);
