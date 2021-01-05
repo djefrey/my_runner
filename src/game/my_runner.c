@@ -52,9 +52,9 @@ static void loop(sfRenderWindow *window, infos_t *infos)
     sfClock_destroy(clock);
 }
 
-int game(sfRenderWindow *window, char *level, char *player_skin)
+int game(sfRenderWindow *window, char *level, int sprite_id)
 {
-    infos_t *infos = create_infos(player_skin);
+    infos_t *infos = create_infos();
     int level_size;
 
     if (!infos || (level_size = load_level(level, infos)) == -1)
@@ -62,6 +62,8 @@ int game(sfRenderWindow *window, char *level, char *player_skin)
     infos->status = GAME;
     infos->level_size = level_size - LEVEL_END;
     set_texts(infos->texts, "PAUSE", "");
+    sfSprite_setTextureRect(infos->player->sprite,
+    (sfIntRect) {64 * sprite_id, 0, 64, 64});
     loop(window, infos);
     destroy_infos(infos);
     return (0);

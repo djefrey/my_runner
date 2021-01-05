@@ -57,12 +57,12 @@ typedef struct {
 
 typedef void (*update_fct_t)(object_t*, void*, float);
 
-int game(sfRenderWindow *window, char *level, char *player_skin);
+int game(sfRenderWindow *window, char *level, int skin_id);
 
-infos_t *create_infos(char *player_skin);
+infos_t *create_infos(void);
 void destroy_infos(infos_t *infos);
 
-list_t *load_textures(char *player_skin);
+list_t *load_textures(void);
 void destroy_textures(list_t *textures);
 sfTexture *get_texture(infos_t *infos, enum texture id);
 

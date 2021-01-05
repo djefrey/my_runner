@@ -10,15 +10,8 @@
 #include "menu.h"
 #include "my_dlist.h"
 
-static void set_skin_texture(skin_t *skin, sfSprite *sprite)
-{
-    sfTexture *texture = skin->texture;
-
-    sfSprite_setTexture(sprite, texture, 0);
-}
-
 static void manage_keyboard(sfKeyEvent keyEv, char *start_game,
-dlist_t **skin, sfSprite *sprite)
+int *sprite_id, sfSprite *sprite)
 {
     if (keyEv.type == sfEvtKeyPressed) {
         switch (keyEv.code) {
@@ -26,25 +19,21 @@ dlist_t **skin, sfSprite *sprite)
                 *start_game = 1;
                 break;
             case sfKeyLeft:
-                *skin = (*skin)->prev;
-                if ((*skin)->data == NULL)
-                    *skin = (*skin)->prev;
-                set_skin_texture((skin_t*) (*skin)->data, sprite);
+                *sprite_id = *sprite_id == 0 ? 3 : *sprite_id - 1;
                 break;
             case sfKeyRight:
-                *skin = (*skin)->next;
-                if ((*skin)->data == NULL)
-                    *skin = (*skin)->next;
-                set_skin_texture((skin_t*) (*skin)->data, sprite);
+                *sprite_id = *sprite_id == 3 ? 0 : *sprite_id + 1;
                 break;
             default:
                 break;
         }
+        sfSprite_setTextureRect(sprite,
+        (sfIntRect) {64 * *sprite_id, 0, 64, 64});
     }
 }
 
 void menu_events(sfRenderWindow *window, char *start_game,
-dlist_t **skin, sfSprite *sprite)
+int *sprite_id, sfSprite *sprite)
 {
     sfEvent event;
 
@@ -53,6 +42,6 @@ dlist_t **skin, sfSprite *sprite)
             sfRenderWindow_close(window);
             continue;
         }
-        manage_keyboard(event.key, start_game, skin, sprite);
+        manage_keyboard(event.key, start_game, sprite_id, sprite);
     }
 }

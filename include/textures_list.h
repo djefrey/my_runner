@@ -11,7 +11,7 @@
 #define TEXTURES_NB 9
 
 const char *TEXTURES_PATH[] = {
-    NULL,
+    "./assets/textures/player.png",
     "./assets/textures/stone.png",
     "./assets/textures/grass.png",
     "./assets/textures/dirt.png",

@@ -11,13 +11,28 @@
 #include "menu.h"
 #include "texts.h"
 
-static int free_and_ret(texts_t *texts, dlist_t *root, sfSprite *sprite)
+static int free_and_ret(texts_t *texts, sfTexture *texture, sfSprite *sprite)
 {
     destroy_texts(texts);
-    destroy_skins(root);
+    if (texture)
+        sfTexture_destroy(texture);
     if (sprite)
         sfSprite_destroy(sprite);
     return (84);
+}
+
+static sfSprite *create_skin_sprite(sfTexture *texture)
+{
+    sfSprite *sprite;
+
+    if (!texture)
+        return (NULL);
+    sprite = sfSprite_create();
+    if (!sprite)
+        return (NULL);
+    sfSprite_setTexture(sprite, texture, 0);
+    sfSprite_setTextureRect(sprite, (sfIntRect) {0, 0, 64, 64});
+    return (sprite);
 }
 
 static void draw(sfRenderWindow *window, texts_t *texts, sfSprite *sprite)
@@ -32,25 +47,22 @@ static void draw(sfRenderWindow *window, texts_t *texts, sfSprite *sprite)
 int menu(sfRenderWindow *window, char *level)
 {
     char start_game = 0;
+    int sprite_id = 0;
     texts_t *texts = create_texts();
-    dlist_t *root = load_skins();
-    dlist_t *skin = root->next;
-    sfSprite *sprite = sfSprite_create();
-    char *skin_path;
+    sfTexture *skin_text = sfTexture_createFromFile("./assets/textures/player.png", 0);
+    sfSprite *sprite = create_skin_sprite(skin_text);
 
-    if (!texts || !root || !sprite)
-        return (free_and_ret(texts, root, sprite));
+    if (!texts || !skin_text || !sprite)
+        return (free_and_ret(texts, skin_text, sprite));
     set_texts(texts, "my_runner", "Appuyez sur Espace");
     sfSprite_setPosition(sprite, (sfVector2f) {930, 510});
-    sfSprite_setTexture(sprite, ((skin_t*) skin->data)->texture, 0);
     while (!start_game && sfRenderWindow_isOpen(window)) {
-        menu_events(window, &start_game, &skin, sprite);
+        menu_events(window, &start_game, &sprite_id, sprite);
         draw(window, texts, sprite);
     }
-    skin_path = ((skin_t*) skin->data)->path;
-    free_and_ret(texts, root, sprite);
+    free_and_ret(texts, skin_text, sprite);
     if (start_game)
-        return (game(window, level, skin_path));
+        return (game(window, level, sprite_id));
     else
         return (0);
 }

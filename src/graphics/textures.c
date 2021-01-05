@@ -43,15 +43,13 @@ static int load_texture(list_t **textures, const char *path)
     return (0);
 }
 
-list_t *load_textures(char *player_skin)
+list_t *load_textures(void)
 {
     list_t *list = NULL;
     char destroy = 0;
-    char *text_path;
 
     for (int i = 0; i < TEXTURES_NB && !destroy; i++) {
-        text_path = TEXTURES_PATH[TEXTURES_NB - i - 1];
-        if (load_texture(&list, text_path ? text_path : player_skin))
+        if (load_texture(&list, TEXTURES_PATH[TEXTURES_NB - i - 1]))
             destroy = 1;
     }
     if (destroy) {
