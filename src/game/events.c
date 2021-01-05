@@ -16,17 +16,13 @@ static void set_pause(infos_t *infos)
     if (infos->status == GAME) {
         infos->status = PAUSE;
         infos->fade->alpha = 127;
+        sfMusic_pause(infos->audio->music);
     } else {
         infos->status = GAME;
         infos->fade->alpha = 0;
+        sfMusic_play(infos->audio->music);
     }
     update_fade_sprite(infos->fade);
-}
-
-static void manage_mouse(sfMouseButtonEvent mouseEv,
-infos_t *infos, float elapsed)
-{
-
 }
 
 static void manage_keyboard(sfKeyEvent keyEv,
@@ -58,6 +54,5 @@ infos_t *infos, float elapsed)
             continue;
         }
         manage_keyboard(event.key, infos, elapsed);
-        manage_mouse(event.mouseButton, infos, elapsed);
     }
 }
