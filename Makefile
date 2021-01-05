@@ -8,7 +8,6 @@
 SRC		=	src/main.c					\
 			src/menu/menu.c				\
 			src/menu/menu_events.c		\
-			src/menu/skins.c		\
 			src/game/my_runner.c		\
 			src/game/game_update.c		\
 			src/game/game_draw.c		\
