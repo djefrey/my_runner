@@ -9,8 +9,7 @@
 
 void update_block(object_t *obj, void *infos, float elapsed)
 {
-    set_position(obj, obj->pos.x - SCROLLING_SPEED *
-    ((int) elapsed), obj->pos.y);
+    set_position(obj, obj->pos.x - SCROLLING_SPEED * sqrt(elapsed), obj->pos.y);
     if (obj->pos.x <= -BLOCK_SIZE)
         obj->hide = 1;
 }
@@ -46,7 +45,7 @@ void update_fire(object_t *obj, void *infos, float elapsed)
     }
 }
 
-void reset_blocks(list_t *list, float pos)
+void reset_blocks(list_t *list)
 {
     object_t *obj;
 
@@ -54,7 +53,7 @@ void reset_blocks(list_t *list, float pos)
         obj = (object_t*) list->data;
         if (obj->type == PLAYER)
             continue;
-        set_position(obj, obj->pos.x + pos, obj->pos.y);
+        set_position(obj, obj->ori_x, obj->pos.y);
         obj->hide = 0;
     }
 }

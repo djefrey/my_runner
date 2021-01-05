@@ -24,6 +24,7 @@ static void read_line(char *line, int len, int y, infos_t *infos)
         obj = create_object(infos, OBJECT_LIST[id],
         TEXTURE_LIST[id], UPDATE_LIST[id]);
         set_position(obj, i * 64, y * 64);
+        obj->ori_x = i * 64;
     }
 }
 

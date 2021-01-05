@@ -11,8 +11,8 @@
 
 static sfRenderWindow *create_window(int ac, char *av[])
 {
-    int width = ac == 4 ? my_getnbr(av[2]) : WINDOW_WIDTH;
-    int height = ac == 4 ? my_getnbr(av[3]) : WINDOW_HEIGHT;
+    int width = ac >= 4 ? my_getnbr(av[2]) : WINDOW_WIDTH;
+    int height = ac >= 4 ? my_getnbr(av[3]) : WINDOW_HEIGHT;
     sfVideoMode mode = {width, height, 32};
     sfRenderWindow *window =
     sfRenderWindow_create(mode, WINDOW_TITLE, sfDefaultStyle, NULL);
@@ -23,7 +23,7 @@ static sfRenderWindow *create_window(int ac, char *av[])
     sfView_setSize(view, view_size);
     sfView_setCenter(view, view_center);
     sfRenderWindow_setView(window, view);
-    sfRenderWindow_setFramerateLimit(window, 60);
+    sfRenderWindow_setFramerateLimit(window, ac >= 5 ? my_getnbr(av[4]) : 60);
     return (window);
 }
 
@@ -37,7 +37,7 @@ static void print_help()
     my_putstr("     esc: pause (game)\n");
     my_putstr("     left/right: select skin (menu)\n");
     my_putstr("\nARGUMENTS\n");
-    my_putstr("     ./my_runner level_file [width] [height]\n");
+    my_putstr("     ./my_runner level_file [width] [height] [fps]\n");
 }
 
 int main(int ac, char *av[])

@@ -10,7 +10,7 @@
 #include "my_list.h"
 #include "my_runner.h"
 
-void set_position(object_t *object, int x, int y)
+void set_position(object_t *object, float x, float y)
 {
     (object->pos).x = x;
     (object->pos).y = y;

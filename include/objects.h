@@ -34,6 +34,7 @@ typedef struct object {
     sfVector2f acc;
     float rot;
     float time;
+    int ori_x;
     void (*update)(struct object*, void*, float);
     char hide;
     char memfill[1];
@@ -47,6 +48,7 @@ typedef struct player {
     sfVector2f acc;
     float rot;
     float time;
+    int ori_x;
     void (*update)(struct object*, void*, float);
     char dead;
     char on_ground;
@@ -54,7 +56,7 @@ typedef struct player {
 
 void destroy_object(object_t *object, list_t **list);
 void destroy_objects(list_t *list);
-void set_position(object_t *object, int x, int y);
+void set_position(object_t *object, float x, float y);
 void set_rotation(object_t *object, float rot);
 
 void reset_player(player_t *obj);
@@ -63,6 +65,6 @@ char check_collision(object_t* p_obj, object_t *obj);
 void update_block(object_t *obj, void *objs, float);
 void update_emerald(object_t *obj, void *infos, float);
 void update_fire(object_t *obj, void *infos, float);
-void reset_blocks(list_t *objs, float pos);
+void reset_blocks(list_t *objs);
 
 #endif /* !OBJECTS_H_ */

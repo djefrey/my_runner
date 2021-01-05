@@ -26,7 +26,7 @@ void game_update(infos_t *infos, float elapsed, float *pos)
         (*(obj->update))(obj, infos, elapsed);
     }
     if (infos->player->dead) {
-        reset_blocks(infos->objects, *pos);
+        reset_blocks(infos->objects);
         reset_player(infos->player);
         infos->score->score = 0;
         *pos = 0;
