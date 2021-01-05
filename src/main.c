@@ -33,8 +33,9 @@ static void print_help()
     my_putstr("DESCRIPTION\n");
     my_putstr("     Jump at the right moment to dodge obstacles\n");
     my_putstr("\nCONTROLS\n");
-    my_putstr("     space: jump\n");
-    my_putstr("     esc: pause\n");
+    my_putstr("     space: start (menu) / jump (game)\n");
+    my_putstr("     esc: pause (game)\n");
+    my_putstr("     left/right: select skin (menu)\n");
     my_putstr("\nARGUMENTS\n");
     my_putstr("     ./my_runner level_file [width] [height]\n");
 }
