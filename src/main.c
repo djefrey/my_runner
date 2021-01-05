@@ -42,17 +42,16 @@ static void print_help()
 
 int main(int ac, char *av[])
 {
-    sfRenderWindow *window = create_window(ac, av);
+    sfRenderWindow *window;
     char *level;
 
-    if (ac == 1) {
-        sfRenderWindow_destroy(window);
+    if (ac == 1)
         return (84);
-    }
     if (my_strcmp(av[1], "-h") == 0) {
         print_help();
         return (0);
     }
+    window = create_window(ac, av);
     level = av[1];
     return (menu(window, level));
 }
