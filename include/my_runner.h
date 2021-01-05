@@ -12,6 +12,11 @@
 #include "my_list.h"
 #include "framebuffer.h"
 
+#include "objects.h"
+#include "fade.h"
+#include "score.h"
+#include "texts.h"
+
 #define WINDOW_WIDTH 1920
 #define WINDOW_HEIGHT 1080
 #define WINDOW_TITLE "my_runner"
@@ -37,67 +42,6 @@ enum game_status {GAME,
                 PAUSE,
                 END_ANIM,
                 VICTORY};
-
-enum texture {PLAYER_TEXT,
-            STONE_TEXT,
-            GRASS_TEXT,
-            DIRT_TEXT,
-            FIRE_TEXT,
-            COIN_TEXT,
-            GROUND_TEXT,
-            LANDSCAPE_TEXT,
-            SKY_TEXT};
-
-enum object_type {PLAYER,
-                BLOCK,
-                FIRE,
-                COIN};
-
-typedef struct object {
-    enum object_type type;
-    enum texture texture;
-    sfSprite *sprite;
-    sfVector2f pos;
-    sfVector2f acc;
-    float rot;
-    float time;
-    void (*update)(struct object*, void*, float);
-    char hide;
-    char memfill[1];
-} object_t;
-
-typedef struct player {
-    enum object_type type;
-    enum texture texture;
-    sfSprite *sprite;
-    sfVector2f pos;
-    sfVector2f acc;
-    float rot;
-    float time;
-    void (*update)(struct object*, void*, float);
-    char dead;
-    char on_ground;
-} player_t;
-
-typedef struct {
-    int score;
-    int score_display;
-    sfText *text;
-    sfFont *font;
-} score_t;
-
-typedef struct {
-    unsigned char alpha;
-    framebuffer_t *fb;
-    sfTexture *texture;
-    sfSprite *sprite;
-} fade_t;
-
-typedef struct {
-    sfText *title;
-    sfText *infos;
-    sfFont *font;
-} texts_t;
 
 typedef struct {
     enum game_status status;
@@ -126,17 +70,6 @@ void move_backgrounds(infos_t *infos, float pos);
 void destroy_backgrounds(list_t *backgrounds);
 list_t *create_backgrounds(infos_t *infos);
 
-void set_position(object_t *object, int x, int y);
-void set_rotation(object_t *object, float rot);
-void destroy_object(object_t *object, list_t **list);
-void destroy_objects(list_t *list);
-object_t *create_object(infos_t *infos, enum object_type type,
-enum texture text_id, update_fct_t up_fct);
-
-player_t *create_player(infos_t *infos);
-void reset_player(player_t *obj);
-char check_collision(object_t* p_obj, object_t *obj);
-
 int load_level(char *filepath, infos_t *infos);
 
 void game_update(infos_t *infos, float elapsed, float *pos);
@@ -146,26 +79,11 @@ void game_draw(sfRenderWindow *window, infos_t *infos);
 void end_draw(sfRenderWindow *window, infos_t *infos);
 void victory_draw(sfRenderWindow *window, infos_t *infos);
 
-void update_block(object_t *obj, void *objs, float);
-void update_emerald(object_t *obj, void *infos, float);
-void update_fire(object_t *obj, void *infos, float);
-void reset_blocks(list_t *objs, float pos);
-
 void analyse_events(sfRenderWindow *window,
 infos_t *infos, float elapsed);
 
-score_t *create_score(void);
-void destroy_score(score_t *score);
-void set_score(score_t *score);
-
-fade_t *create_fade(sfColor color);
-void destroy_fade(fade_t *fade);
-void update_fade_sprite(fade_t *fade);
-void increase_fade_alpha(fade_t *fade, int inc);
-void decrease_fade_alpha(fade_t *fade, int inc);
-
-texts_t *create_texts(void);
-void destroy_texts(texts_t *texts);
-void set_texts(texts_t *texts, char *title, char *infos);
+object_t *create_object(infos_t *infos, enum object_type type,
+enum texture text_id, update_fct_t up_fct);
+player_t *create_player(infos_t *infos);
 
 #endif /* !MY_RUNNER_H_ */
