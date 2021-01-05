@@ -11,12 +11,13 @@
 
 static void set_text(sfText *text, char *str)
 {
-    int biggest = my_get_biggest_line(str);
-    int x = WINDOW_WIDTH / 2 - biggest * sfText_getCharacterSize(text) / 2;
     int y = sfText_getPosition(text).y;
+    sfFloatRect rect;
 
-    sfText_setPosition(text, (sfVector2f) {x, y});
     sfText_setString(text, str);
+    rect = sfText_getLocalBounds(text);
+    sfText_setPosition(text, (sfVector2f)
+    {WINDOW_WIDTH / 2 - rect.width / 2, y});
 }
 
 void set_texts(texts_t *texts, char *title, char *infos)
