@@ -57,18 +57,18 @@ typedef struct {
 
 typedef void (*update_fct_t)(object_t*, void*, float);
 
-int game(sfRenderWindow *window, char *level);
+int game(sfRenderWindow *window, char *level, char *player_skin);
 
-infos_t *create_infos(void);
+infos_t *create_infos(char *player_skin);
 void destroy_infos(infos_t *infos);
 
-sfTexture *get_texture(infos_t *infos, enum texture id);
+list_t *load_textures(char *player_skin);
 void destroy_textures(list_t *textures);
-list_t *load_textures(void);
+sfTexture *get_texture(infos_t *infos, enum texture id);
 
-void move_backgrounds(infos_t *infos, float pos);
-void destroy_backgrounds(list_t *backgrounds);
 list_t *create_backgrounds(infos_t *infos);
+void destroy_backgrounds(list_t *backgrounds);
+void move_backgrounds(infos_t *infos, float pos);
 
 int load_level(char *filepath, infos_t *infos);
 

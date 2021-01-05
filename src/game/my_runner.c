@@ -28,7 +28,6 @@ static void update(infos_t *infos, float elapsed, float *pos)
 static void draw(sfRenderWindow *window, infos_t *infos)
 {
     sfRenderWindow_clear(window, sfBlack);
-
     if (infos->status == VICTORY) {
         victory_draw(window, infos);
     } else if (infos->status == END_ANIM)
@@ -53,9 +52,9 @@ static void loop(sfRenderWindow *window, infos_t *infos)
     sfClock_destroy(clock);
 }
 
-int game(sfRenderWindow *window, char *level)
+int game(sfRenderWindow *window, char *level, char *player_skin)
 {
-    infos_t *infos = create_infos();
+    infos_t *infos = create_infos(player_skin);
     int level_size;
 
     if (!infos || (level_size = load_level(level, infos)) == -1)

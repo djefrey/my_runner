@@ -21,7 +21,7 @@ void destroy_infos(infos_t *infos)
     free(infos);
 }
 
-infos_t *create_infos(void)
+infos_t *create_infos(char *player_skin)
 {
     infos_t *infos = malloc(sizeof(infos_t));
 
@@ -29,7 +29,7 @@ infos_t *create_infos(void)
         return (NULL);
     infos->score = 0;
     infos->objects = NULL;
-    if (!(infos->textures = load_textures()) ||
+    if (!(infos->textures = load_textures(player_skin)) ||
     !(infos->backgrounds = create_backgrounds(infos)) ||
     !(infos->player = create_player(infos)) ||
     !(infos->score = create_score()) ||

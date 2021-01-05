@@ -53,5 +53,5 @@ int main(int ac, char *av[])
         return (0);
     }
     level = av[1];
-    return (game(window, level));
+    return (menu(window, level));
 }
