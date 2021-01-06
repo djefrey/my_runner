@@ -25,6 +25,7 @@ static char load_sound(const char *path, audio_t *audio)
     }
     sfSound_setBuffer(sound, sbf);
     create_list(&(audio->sounds), sound);
+    create_list(&(audio->buffers), sbf);
     return (0);
 }
 
@@ -38,19 +39,19 @@ void play_sound(audio_t *audio, enum sound id)
 
 void destroy_audio(audio_t *audio)
 {
-    list_t *list = audio->sounds;
-    sfSound *sound;
-    sfSoundBuffer *sbf;
+    list_t *sounds = audio->sounds;
+    list_t *sbfs = audio->buffers;
+    list_t *sound_tmp;
+    list_t *sbf_tmp;
 
     sfMusic_destroy(audio->music);
-    while (list) {
-        if (list->data) {
-            sound = (sfSound*) list->data;
-            sbf = sfSound_getBuffer(sound);
-            sfSoundBuffer_destroy(sbf);
-            sfSound_destroy(sound);
-        }
-        list = list->next;
+    while (sbfs && sounds) {
+        sound_tmp = sounds->next;
+        sbf_tmp = sbfs->next;
+        sfSound_destroy((sfSound*) sounds->data);
+        sfSoundBuffer_destroy((sfSoundBuffer*) sbfs->data);
+        sounds = sound_tmp;
+        sbfs = sbf_tmp;
     }
 }
 
