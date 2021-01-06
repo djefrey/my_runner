@@ -50,6 +50,8 @@ void destroy_audio(audio_t *audio)
         sbf_tmp = sbfs->next;
         sfSound_destroy((sfSound*) sounds->data);
         sfSoundBuffer_destroy((sfSoundBuffer*) sbfs->data);
+        free(sounds);
+        free(sbfs);
         sounds = sound_tmp;
         sbfs = sbf_tmp;
     }
