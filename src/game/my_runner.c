@@ -20,6 +20,9 @@ static void update(infos_t *infos, float elapsed, float *pos)
         case END_ANIM:
             end_update(infos, elapsed);
             break;
+        case VICTORY:
+            victory_update(infos, "elapsed");
+            break;
         default:
             break;
     }
@@ -28,7 +31,8 @@ static void update(infos_t *infos, float elapsed, float *pos)
 static void draw(sfRenderWindow *window, infos_t *infos)
 {
     sfRenderWindow_clear(window, sfBlack);
-    if (infos->status == VICTORY) {
+    if (infos->status == ASK_NAME || infos->status == VICTORY
+    || infos->status == END) {
         victory_draw(window, infos);
     } else if (infos->status == END_ANIM)
         end_draw(window, infos);
@@ -61,6 +65,7 @@ int game(sfRenderWindow *window, char *level, int sprite_id)
         return (84);
     infos->status = GAME;
     infos->level_size = level_size - LEVEL_END;
+    infos->leaderboard = load_leaderboard(level);
     set_texts(infos->texts, "PAUSE", "");
     sfSprite_setTextureRect(infos->player->sprite,
     (sfIntRect) {64 * sprite_id, 0, 64, 64});

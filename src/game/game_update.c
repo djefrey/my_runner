@@ -8,6 +8,7 @@
 #include <SFML/Graphics.h>
 #include <SFML/System.h>
 #include <math.h>
+#include "my.h"
 #include "my_list.h"
 #include "my_runner.h"
 
@@ -35,15 +36,14 @@ void game_update(infos_t *infos, float elapsed, float *pos)
     set_score(infos->score);
 }
 
-static void set_victory_status(infos_t *infos, float elapsed)
+static void set_ask_name_status(infos_t *infos, float elapsed)
 {
     float rot = infos->player->rot;
 
     if (infos->fade->alpha == 255) {
         if (rot <= (3 * elapsed) || rot >= (360 - 3 * elapsed)) {
             set_rotation((object_t*) infos->player, 0);
-            set_texts(infos->texts, "VICTOIRE", "Y'aura ton score ici");
-            infos->status = VICTORY;
+            infos->status = ASK_NAME;
         }
     }
 }
@@ -56,5 +56,34 @@ void end_update(infos_t *infos, float elapsed)
     update_fade_sprite(infos->fade);
     set_position(player, 930, 510);
     set_rotation(player, player->rot + 5 * elapsed);
-    set_victory_status(infos, elapsed);
+    set_texts(infos->texts, "Entrez votre nom", "");
+    set_ask_name_status(infos, elapsed);
+}
+
+static void set_victory_text(infos_t *infos)
+{
+    char score_str[13] = {0};
+    list_t *list = infos->leaderboard;
+    char *str;
+    char *tmp;
+
+    get_score_str(score_str, infos->score->score);
+    str = my_strmerge(score_str, "\n\nLeaderboard:\n");
+    for (int i = 0; i < 5 && list; i++, list = list->next) {
+        tmp = my_strmerge(str, (char*) list->data);
+        free(str);
+        str = tmp;
+    }
+    set_texts(infos->texts, "VICTOIRE", str);
+    free(str);
+}
+
+void victory_update(infos_t *infos, char *level_path)
+{
+    const char *name = sfText_getString(infos->texts->infos);
+
+    add_entry_to_leaderboard(&(infos->leaderboard), name, infos->score->score);
+    write_leaderboard_file("./bonus/level_lb.txt", infos->leaderboard);
+    set_victory_text(infos);
+    infos->status = END;
 }

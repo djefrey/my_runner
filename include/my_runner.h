@@ -42,7 +42,9 @@
 enum game_status {GAME,
                 PAUSE,
                 END_ANIM,
-                VICTORY};
+                ASK_NAME,
+                VICTORY,
+                END};
 
 typedef struct {
     enum game_status status;
@@ -55,6 +57,7 @@ typedef struct {
     fade_t *fade;
     texts_t *texts;
     audio_t *audio;
+    list_t *leaderboard;
 } infos_t;
 
 typedef void (*update_fct_t)(object_t*, void*, float);
@@ -72,10 +75,16 @@ list_t *create_backgrounds(infos_t *infos);
 void destroy_backgrounds(list_t *backgrounds);
 void move_backgrounds(infos_t *infos, float pos);
 
+list_t *load_leaderboard(char *path);
+void destroy_leaderboard(list_t *lb);
+void add_entry_to_leaderboard(list_t **lb, char *name, int score);
+void write_leaderboard_file(char *path, list_t *lb);
+
 int load_level(char *filepath, infos_t *infos);
 
 void game_update(infos_t *infos, float elapsed, float *pos);
 void end_update(infos_t *infos, float elapsed);
+void victory_update(infos_t *infos, char *level_path);
 
 void game_draw(sfRenderWindow *window, infos_t *infos);
 void end_draw(sfRenderWindow *window, infos_t *infos);

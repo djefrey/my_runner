@@ -9,19 +9,24 @@
 #include "my.h"
 #include "my_runner.h"
 
+void get_score_str(char str[13], int score)
+{
+    char digit;
+
+    for (int i = 11; i >= 0; i--) {
+        digit = 48 + score % 10;
+        score /= 10;
+        str[i] = digit;
+    }
+}
+
 void set_score(score_t *score)
 {
     char str[13] = {0};
-    int cpy_score = score->score;
-    char digit;
 
     if (score->score == score->score_display)
         return;
-    for (int i = 11; i >= 0; i--) {
-        digit = 48 + cpy_score % 10;
-        cpy_score /= 10;
-        str[i] = digit;
-    }
+    get_score_str(str, score->score);
     score->score_display = score->score;
     sfText_setString(score->text, str);
 }

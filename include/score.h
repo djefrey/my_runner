@@ -8,6 +8,8 @@
 #ifndef SCORE_H_
 #define SCORE_H_
 
+#include <SFML/Graphics.h>
+
 typedef struct {
     int score;
     int score_display;
@@ -18,5 +20,6 @@ typedef struct {
 score_t *create_score(void);
 void destroy_score(score_t *score);
 void set_score(score_t *score);
+void get_score_str(char str[13], int score);
 
 #endif /* !SCORE_H_ */
