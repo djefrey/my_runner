@@ -22,4 +22,6 @@ void destroy_score(score_t *score);
 void set_score(score_t *score);
 void get_score_str(char str[13], int score);
 
+int cmp_lb_entries(void *data1, void *data2);
+
 #endif /* !SCORE_H_ */

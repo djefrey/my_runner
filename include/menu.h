@@ -17,6 +17,7 @@ typedef struct {
 } skin_t;
 
 int menu(sfRenderWindow *window, char *level);
+int game(sfRenderWindow *window, char *level, int skin_id);
 
 void menu_events(sfRenderWindow *window, char *start_game,
 int *sprite_id, sfSprite *sprite);

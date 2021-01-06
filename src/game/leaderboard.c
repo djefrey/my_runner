@@ -13,25 +13,11 @@
 #include "my.h"
 #include "my_list.h"
 #include "score.h"
+#include "leaderboard.h"
 
-static int cmp_entries(void *data1, void *data2)
+void write_leaderboard_file(leaderboard_t *lb)
 {
-    char *str1 = (char*) data1;
-    char *str2 = (char*) data2;
-
-    printf("%s / %s\n", str1, str2);
-    for (str1 += 1; *(str1 - 1) != ' '; str1 += 1);
-    for (str2 += 1; *(str2 - 1) != ' '; str2 += 1);
-    for (; *str1; str1 += 1, str2 += 1) {
-        if (*str1 != *str2)
-            return (*str2 - *str1);
-    }
-    return (0);
-}
-
-void write_leaderboard_file(char *path, list_t *lb)
-{
-    int fd = open("./bonus/level_lb.txt", O_WRONLY | O_CREAT,
+    int fd = open(lb->filepath, O_WRONLY | O_CREAT,
     S_IRWXU | S_IRWXG | S_IRWXO);
     char *str;
     int len;
@@ -40,17 +26,16 @@ void write_leaderboard_file(char *path, list_t *lb)
         write(2, "Failed to open/create leaderboard file\n", 39);
         return;
     }
-    while (lb) {
-        str = (char*) lb->data;
+    for (list_t *list = lb->list; list; list = list->next) {
+        str = (char*) list->data;
         len = my_strlen(str);
         write(fd, str, len);
         write(fd, "\n", 1);
-        lb = lb->next;
     }
     close(fd);
 }
 
-void add_entry_to_leaderboard(list_t **lb, const char *name, int score)
+void add_entry_to_leaderboard(leaderboard_t *lb, const char *name, int score)
 {
     char score_str[13] = {0};
     char *name_w_separator = my_strmerge(name, " ");
@@ -58,43 +43,55 @@ void add_entry_to_leaderboard(list_t **lb, const char *name, int score)
 
     get_score_str(score_str, score);
     entry = my_strmerge(name_w_separator, score_str);
-    if (*lb == NULL)
-        create_list(lb, entry);
+    if (lb->list == NULL)
+        create_list(&(lb->list), entry);
     else
-        my_add_in_sorted_list(lb, entry, &cmp_entries);
+        my_add_in_sorted_list(&(lb->list), entry, &cmp_lb_entries);
     free(name_w_separator);
 }
 
-void destroy_leaderboard(list_t *lb)
+void destroy_leaderboard(leaderboard_t *lb)
 {
     list_t *tmp;
 
-    while (lb) {
-        tmp = lb->next;
-        free(lb->data);
-        free(lb);
-        lb = tmp;
+    for (list_t *list = lb->list; list; list = tmp) {
+        tmp = list->next;
+        free(list->data);
+        free(list);
     }
+    free(lb->filepath);
+    free(lb);
 }
 
-list_t *load_leaderboard(char *path)
+static char *get_lb_file_path(char *level_path)
 {
-    list_t *list = NULL;
-    FILE *file = fopen("./bonus/level_lb.txt", "r");
+    int len = my_strlen(level_path);
+    char *cpy = my_strdup(level_path);
+
+    my_strinsert(&cpy, "_lb", len - 4);
+    return (cpy);
+}
+
+leaderboard_t *load_leaderboard(char *level_path)
+{
+    leaderboard_t *lb = malloc(sizeof(leaderboard_t));
+    FILE *file;
     char *line = NULL;
     size_t n = 0;
     ssize_t size;
 
-    if (!file)
+    if (!lb)
+        return (NULL);
+    lb->filepath = get_lb_file_path(level_path);
+    lb->list = NULL;
+    if (!(file = fopen(lb->filepath, "r")))
         return (NULL);
     while ((size = getline(&line, &n, file)) > 1) {
-        if (line[size - 1] == '\n')
-            line[size - 1] = 0;
-        create_list(&list, line);
-        line = NULL;
+        line[size - 1] = 0;
+        create_list(&(lb->list), line);
     }
-    if (list->next)
-        my_rev_list(&list);
+    if (lb->list->next)
+        my_rev_list(&(lb->list));
     fclose(file);
-    return (list);
+    return (lb);
 }

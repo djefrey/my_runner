@@ -47,13 +47,14 @@ static void manage_text(sfTextEvent textEv, infos_t *infos)
 
 static void backspace_text(sfText *text)
 {
-    char *str = sfText_getString(text);
+    char *str = my_strdup(sfText_getString(text));
     int len = my_strlen(str);
 
     if (len == 0)
         return;
     str[len - 1] = 0;
     sfText_setString(text, str);
+    free(str);
 }
 
 static void manage_keyboard(sfKeyEvent keyEv,

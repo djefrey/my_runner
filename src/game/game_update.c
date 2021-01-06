@@ -63,7 +63,7 @@ void end_update(infos_t *infos, float elapsed)
 static void set_victory_text(infos_t *infos)
 {
     char score_str[13] = {0};
-    list_t *list = infos->leaderboard;
+    list_t *list = infos->leaderboard->list;
     char *str;
     char *tmp;
 
@@ -79,12 +79,12 @@ static void set_victory_text(infos_t *infos)
     free(str);
 }
 
-void victory_update(infos_t *infos, char *level_path)
+void victory_update(infos_t *infos)
 {
     const char *name = sfText_getString(infos->texts->infos);
 
-    add_entry_to_leaderboard(&(infos->leaderboard), name, infos->score->score);
-    write_leaderboard_file("./bonus/level_lb.txt", infos->leaderboard);
+    add_entry_to_leaderboard(infos->leaderboard, name, infos->score->score);
+    write_leaderboard_file(infos->leaderboard);
     set_victory_text(infos);
     infos->status = END;
 }

@@ -21,7 +21,7 @@ static void update(infos_t *infos, float elapsed, float *pos)
             end_update(infos, elapsed);
             break;
         case VICTORY:
-            victory_update(infos, "elapsed");
+            victory_update(infos);
             break;
         default:
             break;

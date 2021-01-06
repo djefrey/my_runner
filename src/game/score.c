@@ -9,6 +9,20 @@
 #include "my.h"
 #include "my_runner.h"
 
+int cmp_lb_entries(void *data1, void *data2)
+{
+    char *str1 = (char*) data1;
+    char *str2 = (char*) data2;
+
+    for (str1 += 1; *(str1 - 1) != ' '; str1 += 1);
+    for (str2 += 1; *(str2 - 1) != ' '; str2 += 1);
+    for (; *str1; str1 += 1, str2 += 1) {
+        if (*str1 != *str2)
+            return (*str2 - *str1);
+    }
+    return (0);
+}
+
 void get_score_str(char str[13], int score)
 {
     char digit;
