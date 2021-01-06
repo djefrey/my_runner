@@ -9,7 +9,7 @@
 
 void update_block(object_t *obj, void *infos, float elapsed)
 {
-    set_position(obj, obj->pos.x - SCROLLING_SPEED * sqrt(elapsed), obj->pos.y);
+    set_position(obj, obj->pos.x - SCROLLING_SPEED * elapsed, obj->pos.y);
     if (obj->pos.x <= -BLOCK_SIZE)
         obj->hide = 1;
 }

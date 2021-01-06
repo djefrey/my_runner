@@ -37,7 +37,7 @@ infos_t *infos, float elapsed)
             set_pause(infos);
         if (keyEv.code == sfKeySpace && player->on_ground
         && infos->status == GAME) {
-            player->acc.y -= 20 * sqrt(elapsed);
+            player->acc.y -= 20 * elapsed;
             player->on_ground = 0;
         }
     }

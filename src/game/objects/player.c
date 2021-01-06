@@ -48,7 +48,7 @@ void update_player(object_t *obj, void *infos_void, float elapsed)
     object_t *block;
 
     if (!player->on_ground)
-        obj->acc.y += GRAVITY * elapsed;
+        obj->acc.y += GRAVITY * elapsed * elapsed;
     player->on_ground = 0;
     for (list_t *list = infos->objects;  list != NULL; list = list->next) {
         block = (object_t*) list->data;
