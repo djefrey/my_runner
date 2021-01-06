@@ -45,7 +45,7 @@ void destroy_audio(audio_t *audio)
     list_t *sbf_tmp;
 
     sfMusic_destroy(audio->music);
-    while (sbfs && sounds) {
+    while (sounds && sbfs) {
         sound_tmp = sounds->next;
         sbf_tmp = sbfs->next;
         sfSound_destroy((sfSound*) sounds->data);
@@ -62,13 +62,14 @@ audio_t *create_audio(void)
 
     if (!audio)
         return (NULL);
-    music = sfMusic_createFromFile("./assets/audio/music.ogg");
-    if (!music) {
+    if (!(music = sfMusic_createFromFile("./assets/audio/music.ogg"))) {
         sfMusic_destroy(music);
         return (NULL);
     }
     sfMusic_setLoop(music, sfTrue);
     audio->music = music;
+    audio->sounds = NULL;
+    audio->buffers = NULL;
     for (int i = 0; i < NB_SOUND; i++) {
         if (load_sound(SOUND_LIST[NB_SOUND - i - 1], audio)) {
             destroy_audio(audio);
