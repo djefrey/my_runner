@@ -19,18 +19,20 @@ static int cmp_entries(void *data1, void *data2)
     char *str1 = (char*) data1;
     char *str2 = (char*) data2;
 
+    printf("%s / %s\n", str1, str2);
     for (str1 += 1; *(str1 - 1) != ' '; str1 += 1);
     for (str2 += 1; *(str2 - 1) != ' '; str2 += 1);
     for (; *str1; str1 += 1, str2 += 1) {
         if (*str1 != *str2)
-            return (*str1 - *str2);
+            return (*str2 - *str1);
     }
     return (0);
 }
 
 void write_leaderboard_file(char *path, list_t *lb)
 {
-    int fd = open("./bonus/level_lb.txt", O_WRONLY | O_CREAT, S_IRWXU | S_IRWXG | S_IRWXO);
+    int fd = open("./bonus/level_lb.txt", O_WRONLY | O_CREAT,
+    S_IRWXU | S_IRWXG | S_IRWXO);
     char *str;
     int len;
 
@@ -85,11 +87,14 @@ list_t *load_leaderboard(char *path)
 
     if (!file)
         return (NULL);
-    while ((size = getline(&line, &n, file)) > 0) {
+    while ((size = getline(&line, &n, file)) > 1) {
+        if (line[size - 1] == '\n')
+            line[size - 1] = 0;
         create_list(&list, line);
         line = NULL;
     }
-    my_rev_list(&list);
+    if (list->next)
+        my_rev_list(&list);
     fclose(file);
     return (list);
 }

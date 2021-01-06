@@ -72,7 +72,8 @@ static void set_victory_text(infos_t *infos)
     for (int i = 0; i < 5 && list; i++, list = list->next) {
         tmp = my_strmerge(str, (char*) list->data);
         free(str);
-        str = tmp;
+        str = my_strmerge(tmp, "\n");
+        free(tmp);
     }
     set_texts(infos->texts, "VICTOIRE", str);
     free(str);
