@@ -18,11 +18,8 @@ void my_strinsert(char **str, char *insertion, int pos)
         return;
     newstr = malloc(sizeof(char) * (len + insert_len + 1));
     my_strncpy(newstr, *str, pos);
-    printf("-%s\n", newstr);
     my_strcat(newstr, insertion);
-    printf("-%s\n", newstr);
     my_strcat(newstr, *str + pos);
-    printf("-%s\n", newstr);
     free(*str);
     *str = newstr;
 }
