@@ -16,6 +16,7 @@ enum sound {DAMAGE_SOUND,
 typedef struct {
     sfMusic *music;
     list_t *sounds;
+    list_t *buffers;
 } audio_t;
 
 audio_t *create_audio(void);
