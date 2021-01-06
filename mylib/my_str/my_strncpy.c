@@ -19,6 +19,6 @@ char *my_strncpy(char *dest, char const *src, int n)
         i++;
     }
     if (add_border)
-        dest[i + 1] = '\0';
+        dest[i] = '\0';
     return (dest);
 }
