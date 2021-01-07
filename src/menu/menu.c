@@ -49,13 +49,14 @@ int menu(sfRenderWindow *window, char *level)
     char start_game = 0;
     int sprite_id = 0;
     texts_t *texts = create_texts();
-    sfTexture *skin_text = sfTexture_createFromFile("./assets/textures/player.png", 0);
+    sfTexture *skin_text =
+    sfTexture_createFromFile("./assets/textures/player.png", 0);
     sfSprite *sprite = create_skin_sprite(skin_text);
 
     if (!texts || !skin_text || !sprite)
         return (free_and_ret(texts, skin_text, sprite));
     set_texts(texts, "my_runner", "Appuyez sur Espace");
-    sfSprite_setPosition(sprite, (sfVector2f) {930, 510});
+    sfSprite_setPosition(sprite, (sfVector2f) {896, 476});
     while (!start_game && sfRenderWindow_isOpen(window)) {
         menu_events(window, &start_game, &sprite_id, sprite);
         draw(window, texts, sprite);

@@ -27,7 +27,7 @@ static sfRenderWindow *create_window(int ac, char *av[])
     return (window);
 }
 
-static void print_help()
+static void print_help(void)
 {
     my_putstr("MY_RUNNER\n");
     my_putstr("DESCRIPTION\n");
