@@ -63,13 +63,17 @@ void destroy_leaderboard(leaderboard_t *lb)
     free(lb);
 }
 
-static char *get_lb_file_path(char *level_path)
+static FILE *load_lb_file(leaderboard_t *lb, char *level_path)
 {
     int len = my_strlen(level_path);
     char *cpy = my_strdup(level_path);
+    FILE *file;
 
     my_strinsert(&cpy, "_lb", len - 4);
-    return (cpy);
+    lb->filepath = cpy;
+    if (!(file = fopen(lb->filepath, "r")))
+        return (NULL);
+    return (file);
 }
 
 leaderboard_t *load_leaderboard(char *level_path)
@@ -82,13 +86,13 @@ leaderboard_t *load_leaderboard(char *level_path)
 
     if (!lb)
         return (NULL);
-    lb->filepath = get_lb_file_path(level_path);
     lb->list = NULL;
-    if (!(file = fopen(lb->filepath, "r")))
+    if (!(file = load_lb_file(lb, level_path)))
         return (lb);
     while ((size = getline(&line, &n, file)) > 1) {
         line[size - 1] = 0;
         create_list(&(lb->list), line);
+        line = NULL;
     }
     if (lb->list->next)
         my_rev_list(&(lb->list));
