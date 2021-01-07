@@ -19,10 +19,11 @@ void destroy_infos(infos_t *infos)
     destroy_fade(infos->fade);
     destroy_texts(infos->texts);
     destroy_audio(infos->audio);
+    destroy_leaderboard(infos->leaderboard);
     free(infos);
 }
 
-infos_t *create_infos(void)
+infos_t *create_infos(char *level)
 {
     infos_t *infos = malloc(sizeof(infos_t));
 
@@ -36,7 +37,8 @@ infos_t *create_infos(void)
     !(infos->score = create_score()) ||
     !(infos->fade = create_fade(sfColor_fromRGBA(0, 0, 0, 0))) ||
     !(infos->texts = create_texts()) ||
-    !(infos->audio = create_audio())) {
+    !(infos->audio = create_audio()) ||
+    !(infos->leaderboard = load_leaderboard(level))) {
         destroy_infos(infos);
         return (NULL);
     }

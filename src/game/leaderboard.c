@@ -85,7 +85,7 @@ leaderboard_t *load_leaderboard(char *level_path)
     lb->filepath = get_lb_file_path(level_path);
     lb->list = NULL;
     if (!(file = fopen(lb->filepath, "r")))
-        return (NULL);
+        return (lb);
     while ((size = getline(&line, &n, file)) > 1) {
         line[size - 1] = 0;
         create_list(&(lb->list), line);

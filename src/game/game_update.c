@@ -54,7 +54,7 @@ void end_update(infos_t *infos, float elapsed)
 
     increase_fade_alpha(infos->fade, (int) ceil(elapsed));
     update_fade_sprite(infos->fade);
-    set_position(player, 930, 510);
+    set_position(player, 896, 476);
     set_rotation(player, player->rot + 5 * elapsed);
     set_texts(infos->texts, "Entrez votre nom", "");
     set_ask_name_status(infos, elapsed);

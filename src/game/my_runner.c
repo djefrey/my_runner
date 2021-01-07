@@ -58,14 +58,13 @@ static void loop(sfRenderWindow *window, infos_t *infos)
 
 int game(sfRenderWindow *window, char *level, int sprite_id)
 {
-    infos_t *infos = create_infos();
+    infos_t *infos = create_infos(level);
     int level_size;
 
     if (!infos || (level_size = load_level(level, infos)) == -1)
         return (84);
     infos->status = GAME;
     infos->level_size = level_size - LEVEL_END;
-    infos->leaderboard = load_leaderboard(level);
     set_texts(infos->texts, "PAUSE", "");
     sfSprite_setTextureRect(infos->player->sprite,
     (sfIntRect) {64 * sprite_id, 0, 64, 64});
