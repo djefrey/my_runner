@@ -5,6 +5,7 @@
 ** main file
 */
 
+#include <SFML/Audio.h>
 #include <SFML/Window.h>
 #include <SFML/Graphics.h>
 #include <SFML/System.h>
@@ -54,6 +55,15 @@ static void loop(sfRenderWindow *window, infos_t *infos)
         draw(window, infos);
     }
     sfClock_destroy(clock);
+}
+
+void reset(infos_t *infos, int *pos)
+{
+    reset_blocks(infos->objects);
+    reset_player(infos->player);
+    infos->score->score = 0;
+    *pos = 0;
+    sfMusic_setPlayingOffset(infos->audio->music, (sfTime) {0});
 }
 
 int game(sfRenderWindow *window, char *level, int sprite_id)

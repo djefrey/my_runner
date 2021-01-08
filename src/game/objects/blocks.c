@@ -55,5 +55,6 @@ void reset_blocks(list_t *list)
             continue;
         set_position(obj, obj->ori_x, obj->pos.y);
         obj->hide = 0;
+        obj->time = 0;
     }
 }

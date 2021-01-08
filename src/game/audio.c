@@ -82,7 +82,6 @@ audio_t *create_audio(char *level_path)
         sfMusic_destroy(music);
         return (NULL);
     }
-    sfMusic_setLoop(music, sfTrue);
     audio->music = music;
     audio->sounds = NULL;
     audio->buffers = NULL;

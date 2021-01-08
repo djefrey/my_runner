@@ -5,6 +5,7 @@
 ** game update
 */
 
+#include <SFML/Audio.h>
 #include <SFML/Graphics.h>
 #include <SFML/System.h>
 #include <math.h>
@@ -27,10 +28,7 @@ void game_update(infos_t *infos, float elapsed, float *pos)
         (*(obj->update))(obj, infos, elapsed);
     }
     if (infos->player->dead) {
-        reset_blocks(infos->objects);
-        reset_player(infos->player);
-        infos->score->score = 0;
-        *pos = 0;
+        reset(infos, pos);
         play_sound(infos->audio, DAMAGE_SOUND);
     }
     set_score(infos->score);
@@ -43,6 +41,8 @@ static void set_ask_name_status(infos_t *infos, float elapsed)
     if (infos->fade->alpha == 255) {
         if (rot <= (3 * elapsed) || rot >= (360 - 3 * elapsed)) {
             set_rotation((object_t*) infos->player, 0);
+            set_texts(infos->texts, "Entrez votre nom", "");
+            sfMusic_stop(infos->audio->music);
             infos->status = ASK_NAME;
         }
     }
@@ -56,7 +56,6 @@ void end_update(infos_t *infos, float elapsed)
     update_fade_sprite(infos->fade);
     set_position(player, 896, 476);
     set_rotation(player, player->rot + 5 * elapsed);
-    set_texts(infos->texts, "Entrez votre nom", "");
     set_ask_name_status(infos, elapsed);
 }
 

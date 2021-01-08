@@ -14,7 +14,8 @@
 enum object_type {PLAYER,
                 BLOCK,
                 FIRE,
-                COIN};
+                COIN,
+                PISTON};
 
 enum texture {PLAYER_TEXT,
             STONE_TEXT,
@@ -22,6 +23,7 @@ enum texture {PLAYER_TEXT,
             DIRT_TEXT,
             FIRE_TEXT,
             COIN_TEXT,
+            PISTON_TEXT,
             GROUND_TEXT,
             LANDSCAPE_TEXT,
             SKY_TEXT};
@@ -66,5 +68,8 @@ void update_block(object_t *obj, void *objs, float);
 void update_emerald(object_t *obj, void *infos, float);
 void update_fire(object_t *obj, void *infos, float);
 void reset_blocks(list_t *objs);
+
+void update_piston_base(object_t *obj, void *infos, float);
+void update_piston_head(object_t *obj, void *infos, float);
 
 #endif /* !OBJECTS_H_ */

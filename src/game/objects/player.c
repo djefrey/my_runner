@@ -18,7 +18,8 @@ static void set_player_on_ground(player_t *player, int ground_y)
         set_rotation((object_t*) player, round(player->rot / 90.0) * 90);
 }
 
-static void detect_collision(player_t *player, object_t *block, infos_t *infos)
+static void detect_collision(player_t *player, object_t *block,
+infos_t *infos, float elapsed)
 {
     char result = check_collision((object_t*) player, block);
 
@@ -34,6 +35,11 @@ static void detect_collision(player_t *player, object_t *block, infos_t *infos)
         case 2:
             if (block->type == BLOCK)
                 set_player_on_ground(player, block->pos.y);
+            else if (block->type == PISTON) {
+                set_position((object_t*) player, player->pos.x, player->pos.y - 64);
+                player->acc.y -= 30 * elapsed;
+                extend_piston(block, infos);
+            }
             break;
         case 3:
             player->acc.y = 0;
@@ -54,7 +60,7 @@ void update_player(object_t *obj, void *infos_void, float elapsed)
         block = (object_t*) list->data;
         if (block->type == PLAYER)
             continue;
-        detect_collision(player, block, infos);
+        detect_collision(player, block, infos, elapsed);
     }
     set_position(obj, obj->pos.x, obj->pos.y + obj->acc.y);
     if (!player->on_ground)

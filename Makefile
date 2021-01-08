@@ -22,6 +22,7 @@ SRC		=	src/main.c					\
 			src/game/objects/objects.c	\
 			src/game/objects/player.c	\
 			src/game/objects/blocks.c	\
+			src/game/objects/pistons.c	\
 			src/graphics/backgrounds.c	\
 			src/graphics/framebuffer.c	\
 			src/graphics/fade.c			\
