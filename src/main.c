@@ -37,7 +37,7 @@ static void print_help(void)
     my_putstr("     esc: pause (game)\n");
     my_putstr("     left/right: select skin (menu)\n");
     my_putstr("\nARGUMENTS\n");
-    my_putstr("     ./my_runner level_file [width] [height] [fps]\n");
+    my_putstr("     ./my_runner level_file.txt [width] [height] [fps]\n");
 }
 
 int main(int ac, char *av[])
