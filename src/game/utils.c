@@ -49,7 +49,7 @@ char check_collision(object_t* p_obj, object_t *obj)
         return (0);
     if ((p_posx >= o_posx && p_posx <= o_posx + BLOCK_SIZE) || (p_posx
     + BLOCK_SIZE >= o_posx && p_posx + BLOCK_SIZE <= o_posx + BLOCK_SIZE)) {
-        if (p_obj->acc.y >= 0 && ABS(p_bot - o_top) <= 32)
+        if (p_obj->acc.y >= 0 && ABS(p_bot - o_top) <= 48)
             return (2);
         else if (p_obj->acc.y < 0 && ABS(o_bot - p_top) <= 32)
             return (3);
