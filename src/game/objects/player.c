@@ -30,7 +30,7 @@ infos_t *infos, float elapsed)
             break;
         case 2:
             if (block->type == PISTON)
-                jump_with_piston((object_t*) player, block, infos, elapsed);
+                jump_with_piston(player, block, infos, elapsed);
             else if (block->type == BLOCK)
                 set_player_on_ground(player, block->pos.y);
             break;

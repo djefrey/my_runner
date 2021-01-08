@@ -19,11 +19,12 @@ void quit_fct(void *infos_void, sfVector2i click_pos, sfIntRect rect)
     sfRenderWindow_close(infos->window);
 }
 
-void jump_with_piston(object_t *player, object_t *block,
+void jump_with_piston(player_t *player, object_t *block,
 infos_t *infos, float elapsed)
 {
     set_position((object_t*) player, player->pos.x, player->pos.y - 64);
-    player->acc.y -= 30 * elapsed;
+    player->acc.y = -30 * elapsed;
+    player->on_ground = 0;
     extend_piston(block, infos);
     play_sound(infos->audio, PISTON_SOUND);
 }
