@@ -7,6 +7,7 @@
 
 #include <SFML/Audio.h>
 #include <stdlib.h>
+#include "my.h"
 #include "my_list.h"
 #include "audio.h"
 #include "sound_list.h"
@@ -57,14 +58,27 @@ void destroy_audio(audio_t *audio)
     }
 }
 
-audio_t *create_audio(void)
+static sfMusic *load_music_file(audio_t *audio, char *level_path)
+{
+    int len = my_strlen(level_path) - 4;
+    char *str = malloc(sizeof(char) * (len + 11));
+    sfMusic *music;
+
+    my_strncpy(str, level_path, len);
+    my_strcat(str, "_music.ogg");
+    music = sfMusic_createFromFile(str);
+    free(str);
+    return (music);
+}
+
+audio_t *create_audio(char *level_path)
 {
     audio_t *audio = malloc(sizeof(audio_t));
     sfMusic *music;
 
     if (!audio)
         return (NULL);
-    if (!(music = sfMusic_createFromFile("./assets/audio/music.ogg"))) {
+    if (!(music = load_music_file(audio, level_path))) {
         sfMusic_destroy(music);
         return (NULL);
     }

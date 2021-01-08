@@ -19,7 +19,7 @@ typedef struct {
     list_t *buffers;
 } audio_t;
 
-audio_t *create_audio(void);
+audio_t *create_audio(char *level_path);
 void destroy_audio(audio_t *audio);
 void play_sound(audio_t *audio, enum sound id);
 

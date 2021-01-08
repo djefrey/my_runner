@@ -38,7 +38,7 @@ infos_t *create_infos(char *level)
     !(infos->score = create_score()) ||
     !(infos->fade = create_fade(sfColor_fromRGBA(0, 0, 0, 0))) ||
     !(infos->texts = create_texts()) ||
-    !(infos->audio = create_audio()) ||
+    !(infos->audio = create_audio(level)) ||
     !(infos->leaderboard = load_leaderboard(level)) ||
     !(infos->quit_button = create_button("Quitter",
     (sfVector2f) {30, 1010}, &quit_fct, infos->texts->font))) {
