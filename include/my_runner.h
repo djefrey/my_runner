@@ -35,7 +35,7 @@
 #define BLOCK_SIZE 64
 
 #define PLAYER_POS 256
-#define GRAVITY 1
+#define GRAVITY 1.05f
 
 #define COIN_SCORE 150
 
