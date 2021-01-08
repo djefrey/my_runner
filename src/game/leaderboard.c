@@ -94,7 +94,7 @@ leaderboard_t *load_leaderboard(char *level_path)
         create_list(&(lb->list), line);
         line = NULL;
     }
-    if (lb->list->next)
+    if (lb->list && lb->list->next)
         my_rev_list(&(lb->list));
     fclose(file);
     return (lb);
