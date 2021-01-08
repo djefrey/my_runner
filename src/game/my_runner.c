@@ -63,9 +63,11 @@ int game(sfRenderWindow *window, char *level, int sprite_id)
 
     if (!infos || (level_size = load_level(level, infos)) == -1)
         return (84);
+    infos->window = window;
     infos->status = GAME;
     infos->level_size = level_size - LEVEL_END;
     set_texts(infos->texts, "PAUSE", "");
+    infos->quit_button->hide = 1;
     sfSprite_setTextureRect(infos->player->sprite,
     (sfIntRect) {64 * sprite_id, 0, 64, 64});
     sfMusic_play(infos->audio->music);

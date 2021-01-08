@@ -14,10 +14,11 @@ SRC		=	src/main.c					\
 			src/game/events.c			\
 			src/game/setup.c			\
 			src/game/level.c			\
-			src/game/physics.c			\
+			src/game/utils.c			\
 			src/game/score.c			\
 			src/game/audio.c			\
 			src/game/leaderboard.c		\
+			src/game/buttons.c			\
 			src/game/objects/objects.c	\
 			src/game/objects/player.c	\
 			src/game/objects/blocks.c	\

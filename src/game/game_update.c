@@ -86,5 +86,6 @@ void victory_update(infos_t *infos)
     add_entry_to_leaderboard(infos->leaderboard, name, infos->score->score);
     write_leaderboard_file(infos->leaderboard);
     set_victory_text(infos);
+    infos->quit_button->hide = 0;
     infos->status = END;
 }

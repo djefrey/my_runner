@@ -7,6 +7,18 @@
 
 #include "my_runner.h"
 
+void quit_fct(void *infos_void, sfVector2i click_pos, sfIntRect rect)
+{
+    infos_t *infos = (infos_t*) infos_void;
+    const sfView* view = sfRenderWindow_getView(infos->window);
+    sfVector2f real_pos =
+    sfRenderWindow_mapPixelToCoords(infos->window, click_pos, view);
+
+    if (real_pos.x >= rect.left && real_pos.x <= rect.left + rect.width
+    && real_pos.y >= rect.top && real_pos.y <= rect.top + rect.height)
+    sfRenderWindow_close(infos->window);
+}
+
 char check_collision(object_t* p_obj, object_t *obj)
 {
     int p_posx = p_obj->pos.x + p_obj->acc.x;

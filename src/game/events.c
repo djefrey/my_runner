@@ -17,10 +17,12 @@ static void set_pause(infos_t *infos)
     if (infos->status == GAME) {
         infos->status = PAUSE;
         infos->fade->alpha = 127;
+        infos->quit_button->hide = 0;
         sfMusic_pause(infos->audio->music);
     } else {
         infos->status = GAME;
         infos->fade->alpha = 0;
+        infos->quit_button->hide = 1;
         sfMusic_play(infos->audio->music);
     }
     update_fade_sprite(infos->fade);
@@ -84,6 +86,8 @@ void analyse_events(sfRenderWindow *window,
 infos_t *infos, float elapsed)
 {
     sfEvent event;
+    sfMouseButtonEvent mouseE;
+    sfIntRect q_rect = infos->quit_button->rect;
 
     while (sfRenderWindow_pollEvent(window, &event)) {
         if (event.type == sfEvtClosed) {
@@ -92,5 +96,11 @@ infos_t *infos, float elapsed)
         }
         manage_keyboard(event.key, infos, elapsed);
         manage_text(event.text, infos);
+        if (event.type == sfEvtMouseButtonPressed
+        && !infos->quit_button->hide) {
+            mouseE = event.mouseButton;
+            (*infos->quit_button->on_click)
+            (infos, (sfVector2i) {mouseE.x, mouseE.y}, q_rect);
+        }
     }
 }

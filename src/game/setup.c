@@ -20,6 +20,7 @@ void destroy_infos(infos_t *infos)
     destroy_texts(infos->texts);
     destroy_audio(infos->audio);
     destroy_leaderboard(infos->leaderboard);
+    destroy_button(infos->quit_button);
     free(infos);
 }
 
@@ -38,7 +39,9 @@ infos_t *create_infos(char *level)
     !(infos->fade = create_fade(sfColor_fromRGBA(0, 0, 0, 0))) ||
     !(infos->texts = create_texts()) ||
     !(infos->audio = create_audio()) ||
-    !(infos->leaderboard = load_leaderboard(level))) {
+    !(infos->leaderboard = load_leaderboard(level)) ||
+    !(infos->quit_button = create_button("Quitter",
+    (sfVector2f) {30, 1010}, &quit_fct, infos->texts->font))) {
         destroy_infos(infos);
         return (NULL);
     }

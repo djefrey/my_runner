@@ -18,6 +18,7 @@
 #include "texts.h"
 #include "audio.h"
 #include "leaderboard.h"
+#include "buttons.h"
 
 #define WINDOW_WIDTH 1920
 #define WINDOW_HEIGHT 1080
@@ -50,6 +51,7 @@ enum game_status {GAME,
 typedef struct {
     enum game_status status;
     int level_size;
+    sfRenderWindow *window;
     list_t *textures;
     list_t *backgrounds;
     list_t *objects;
@@ -59,6 +61,7 @@ typedef struct {
     texts_t *texts;
     audio_t *audio;
     leaderboard_t *leaderboard;
+    button_t *quit_button;
 } infos_t;
 
 typedef void (*update_fct_t)(object_t*, void*, float);
@@ -89,6 +92,8 @@ void victory_draw(sfRenderWindow *window, infos_t *infos);
 
 void analyse_events(sfRenderWindow *window,
 infos_t *infos, float elapsed);
+
+void quit_fct(void *infos_void, sfVector2i click_pos, sfIntRect rect);
 
 object_t *create_object(infos_t *infos, enum object_type type,
 enum texture text_id, update_fct_t up_fct);

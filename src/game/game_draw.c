@@ -27,6 +27,7 @@ void game_draw(sfRenderWindow *window, infos_t *infos)
         sfRenderWindow_drawSprite(window, infos->fade->sprite, NULL);
         sfRenderWindow_drawText(window, infos->texts->title, NULL);
         sfRenderWindow_drawText(window, infos->texts->infos, NULL);
+        sfRenderWindow_drawText(window, infos->quit_button->text, NULL);
     }
 }
 
@@ -52,4 +53,6 @@ void victory_draw(sfRenderWindow *window, infos_t *infos)
     sfRenderWindow_drawSprite(window, infos->player->sprite, NULL);
     sfRenderWindow_drawText(window, infos->texts->title, NULL);
     sfRenderWindow_drawText(window, infos->texts->infos, NULL);
+    if (!infos->quit_button->hide)
+        sfRenderWindow_drawText(window, infos->quit_button->text, NULL);
 }
