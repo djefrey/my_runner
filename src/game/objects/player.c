@@ -58,6 +58,8 @@ void update_player(object_t *obj, void *infos_void, float elapsed)
     set_position(obj, obj->pos.x, obj->pos.y + obj->acc.y);
     if (!player->on_ground)
         set_rotation(obj, obj->rot + 5 * elapsed);
+    if (player->pos.y >= WINDOW_HEIGHT + 64)
+        player->dead = 1;
 }
 
 void reset_player(player_t *player)
