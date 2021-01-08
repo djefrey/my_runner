@@ -41,21 +41,21 @@ static void manage_text(sfTextEvent textEv, infos_t *infos)
             letter[0] = c;
             str = sfText_getString(infos->texts->infos);
             tmp = my_strmerge(str, letter);
-            sfText_setString(infos->texts->infos, tmp);
+            set_texts(infos->texts, "Entrez votre nom", tmp);
             free(tmp);
         }
     }
 }
 
-static void backspace_text(sfText *text)
+static void backspace_text(infos_t *infos)
 {
-    char *str = my_strdup(sfText_getString(text));
+    char *str = my_strdup(sfText_getString(infos->texts->infos));
     int len = my_strlen(str);
 
     if (len == 0)
         return;
     str[len - 1] = 0;
-    sfText_setString(text, str);
+    set_texts(infos->texts, "Entrez votre nom", str);
     free(str);
 }
 
@@ -77,7 +77,7 @@ infos_t *infos, float elapsed)
             if (keyEv.code == sfKeyEnter)
                 infos->status = VICTORY;
             else if (keyEv.code == sfKeyBackspace)
-                backspace_text(infos->texts->infos);
+                backspace_text(infos);
         }
     }
 }
