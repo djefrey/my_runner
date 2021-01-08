@@ -25,7 +25,7 @@ void update_piston_head(object_t *obj, void *infos_void, float elapsed)
     infos_t *infos = (infos_t*) infos_void;
 
     update_block(obj, infos_void, elapsed);
-    obj->time -= 1;
+    obj->time -= elapsed;
     if (obj->time <= 0) {
         destroy_object(obj, &(infos->objects));
     }
@@ -35,7 +35,7 @@ void update_piston_base(object_t *obj, void *infos_void, float elapsed)
 {
     update_block(obj, infos_void, elapsed);
     if (sfSprite_getTextureRect(obj->sprite).left == 64) {
-        obj->time -= 1;
+        obj->time -= elapsed;
         if (obj->time <= 0)
             sfSprite_setTextureRect(obj->sprite, (sfIntRect) {0, 0, 64, 64});
     }

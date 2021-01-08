@@ -103,4 +103,8 @@ player_t *create_player(infos_t *infos);
 
 void extend_piston(object_t *base, infos_t *infos);
 
+void take_coin(object_t *block, infos_t *infos);
+void jump_with_piston(object_t *player, object_t *block,
+infos_t *infos, float elapsed);
+
 #endif /* !MY_RUNNER_H_ */

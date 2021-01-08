@@ -19,6 +19,22 @@ void quit_fct(void *infos_void, sfVector2i click_pos, sfIntRect rect)
     sfRenderWindow_close(infos->window);
 }
 
+void jump_with_piston(object_t *player, object_t *block,
+infos_t *infos, float elapsed)
+{
+    set_position((object_t*) player, player->pos.x, player->pos.y - 64);
+    player->acc.y -= 30 * elapsed;
+    extend_piston(block, infos);
+    play_sound(infos->audio, PISTON_SOUND);
+}
+
+void take_coin(object_t *block, infos_t *infos)
+{
+    block->hide = 1;
+    infos->score->score += COIN_SCORE;
+    play_sound(infos->audio, COIN_SOUND);
+}
+
 char check_collision(object_t* p_obj, object_t *obj)
 {
     int p_posx = p_obj->pos.x + p_obj->acc.x;

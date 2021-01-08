@@ -21,25 +21,18 @@ static void set_player_on_ground(player_t *player, int ground_y)
 static void detect_collision(player_t *player, object_t *block,
 infos_t *infos, float elapsed)
 {
-    char result = check_collision((object_t*) player, block);
-
-    switch (result) {
+    switch (check_collision((object_t*) player, block)) {
         case 1:
-            if (block->type == COIN) {
-                block->hide = 1;
-                infos->score->score += COIN_SCORE;
-                play_sound(infos->audio, COIN_SOUND);
-            } else
+            if (block->type == COIN)
+                take_coin(block, infos);
+            else
                 player->dead = 1;
             break;
         case 2:
-            if (block->type == BLOCK)
+            if (block->type == PISTON)
+                jump_with_piston((object_t*) player, block, infos, elapsed);
+            else if (block->type == BLOCK)
                 set_player_on_ground(player, block->pos.y);
-            else if (block->type == PISTON) {
-                set_position((object_t*) player, player->pos.x, player->pos.y - 64);
-                player->acc.y -= 30 * elapsed;
-                extend_piston(block, infos);
-            }
             break;
         case 3:
             player->acc.y = 0;

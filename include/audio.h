@@ -11,7 +11,8 @@
 #include <SFML/Audio.h>
 
 enum sound {DAMAGE_SOUND,
-            COIN_SOUND};
+            COIN_SOUND,
+            PISTON_SOUND};
 
 typedef struct {
     sfMusic *music;

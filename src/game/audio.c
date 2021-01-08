@@ -25,6 +25,7 @@ static char load_sound(const char *path, audio_t *audio)
         return (1);
     }
     sfSound_setBuffer(sound, sbf);
+    sfSound_setVolume(sound, 66);
     create_list(&(audio->sounds), sound);
     create_list(&(audio->buffers), sbf);
     return (0);
