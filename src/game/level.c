@@ -18,7 +18,7 @@ static void read_line(char *line, int len, int y, infos_t *infos)
     object_t *obj;
 
     for (int i = 0; i < len; i++, line += 1) {
-        if (*line < '0' || *line > '9')
+        if (*line < '0' || *line > '5')
             continue;
         id = *line - '0';
         obj = create_object(infos, OBJECT_LIST[id],
