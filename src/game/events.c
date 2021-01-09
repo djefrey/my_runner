@@ -95,8 +95,9 @@ infos_t *infos, float elapsed)
             continue;
         }
         manage_keyboard(event.key, infos, elapsed);
-        manage_text(event.text, infos);
-        if (event.type == sfEvtMouseButtonPressed
+        if (event.type == sfEvtTextEntered)
+            manage_text(event.text, infos);
+        else if (event.type == sfEvtMouseButtonPressed
         && !infos->quit_button->hide) {
             mouseE = event.mouseButton;
             (*infos->quit_button->on_click)
