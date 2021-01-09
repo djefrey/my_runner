@@ -44,12 +44,18 @@ int main(int ac, char *av[])
 {
     sfRenderWindow *window;
     char *level;
+    int len;
 
     if (ac == 1)
         return (84);
     if (my_strcmp(av[1], "-h") == 0) {
         print_help();
         return (0);
+    }
+    len = my_strlen(av[1]);
+    if (len < 4 || my_strcmp(av[1] + len - 4, ".txt")) {
+        write(2, "Format de fichier non valide\n", 29);
+        return (84);
     }
     window = create_window(ac, av);
     level = av[1];

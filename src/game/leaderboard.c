@@ -54,6 +54,8 @@ void destroy_leaderboard(leaderboard_t *lb)
 {
     list_t *tmp;
 
+    if (!lb)
+        return;
     for (list_t *list = lb->list; list; list = tmp) {
         tmp = list->next;
         free(list->data);

@@ -41,11 +41,15 @@ void play_sound(audio_t *audio, enum sound id)
 
 void destroy_audio(audio_t *audio)
 {
-    list_t *sounds = audio->sounds;
-    list_t *sbfs = audio->buffers;
+    list_t *sounds;
+    list_t *sbfs;
     list_t *sound_tmp;
     list_t *sbf_tmp;
 
+    if (!audio)
+        return;
+    sounds = audio->sounds;
+    sbfs = audio->buffers;
     sfMusic_destroy(audio->music);
     while (sounds && sbfs) {
         sound_tmp = sounds->next;
@@ -80,7 +84,7 @@ audio_t *create_audio(char *level_path)
     if (!audio)
         return (NULL);
     if (!(music = load_music_file(audio, level_path))) {
-        sfMusic_destroy(music);
+        free(music);
         return (NULL);
     }
     audio->music = music;

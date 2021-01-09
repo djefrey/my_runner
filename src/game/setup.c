@@ -24,14 +24,32 @@ void destroy_infos(infos_t *infos)
     free(infos);
 }
 
-infos_t *create_infos(char *level)
+static infos_t *create_null_infos(void)
 {
     infos_t *infos = malloc(sizeof(infos_t));
 
-    if (infos == NULL)
+    if (!infos)
         return (NULL);
     infos->score = 0;
     infos->objects = NULL;
+    infos->textures = NULL;
+    infos->backgrounds = NULL;
+    infos->player = NULL;
+    infos->score = NULL;
+    infos->fade = NULL;
+    infos->texts = NULL;
+    infos->audio = NULL;
+    infos->leaderboard = NULL;
+    infos->quit_button = NULL;
+    return (infos);
+}
+
+infos_t *create_infos(char *level)
+{
+    infos_t *infos = create_null_infos();
+
+    if (infos == NULL)
+        return (NULL);
     if (!(infos->textures = load_textures()) ||
     !(infos->backgrounds = create_backgrounds(infos)) ||
     !(infos->player = create_player(infos)) ||
