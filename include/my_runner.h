@@ -69,7 +69,7 @@ typedef void (*update_fct_t)(object_t*, void*, float);
 int menu(sfRenderWindow *window, char *level);
 int game(sfRenderWindow *window, char *level, int skin_id);
 
-void reset(infos_t *infos, int *pos);
+void reset(infos_t *infos, float *pos);
 
 infos_t *create_infos(char *level);
 void destroy_infos(infos_t *infos);

@@ -7,6 +7,7 @@
 
 #include <SFML/Graphics.h>
 #include <stdlib.h>
+#include "my.h"
 #include "my_list.h"
 #include "buttons.h"
 

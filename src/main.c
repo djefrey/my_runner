@@ -6,6 +6,7 @@
 */
 
 #include <SFML/Graphics.h>
+#include <unistd.h>
 #include "my.h"
 #include "my_runner.h"
 

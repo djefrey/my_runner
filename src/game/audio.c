@@ -63,7 +63,7 @@ void destroy_audio(audio_t *audio)
     }
 }
 
-static sfMusic *load_music_file(audio_t *audio, char *level_path)
+static sfMusic *load_music_file(char *level_path)
 {
     int len = my_strlen(level_path) - 4;
     char *str = malloc(sizeof(char) * (len + 11));
@@ -83,7 +83,7 @@ audio_t *create_audio(char *level_path)
 
     if (!audio)
         return (NULL);
-    if (!(music = load_music_file(audio, level_path))) {
+    if (!(music = load_music_file(level_path))) {
         free(music);
         return (NULL);
     }

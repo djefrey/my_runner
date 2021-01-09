@@ -57,7 +57,7 @@ static void loop(sfRenderWindow *window, infos_t *infos)
     sfClock_destroy(clock);
 }
 
-void reset(infos_t *infos, int *pos)
+void reset(infos_t *infos, float *pos)
 {
     reset_blocks(infos->objects);
     reset_player(infos->player);
