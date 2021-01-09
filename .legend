@@ -10,6 +10,6 @@ IDs:
 Infinite width
 Height of 18
 
-The end of the level is 30 block above the "real" end, so place more 30 blocks
+The end of the level is 30 block before the "real" end, so place 30 more blocks at the end
 
 You need to provide an OGG file named "[LEVEL_NAME]_music.ogg"
