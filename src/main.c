@@ -46,15 +46,17 @@ int main(int ac, char *av[])
     char *level;
     int len;
 
-    if (ac == 1)
+    if (ac == 1) {
+        write(2, "Level file not provided\n", 24);
         return (84);
+    }
     if (my_strcmp(av[1], "-h") == 0) {
         print_help();
         return (0);
     }
     len = my_strlen(av[1]);
     if (len < 4 || my_strcmp(av[1] + len - 4, ".txt")) {
-        write(2, "Format de fichier non valide\n", 29);
+        write(2, "Level format not supported\n", 27);
         return (84);
     }
     window = create_window(ac, av);
